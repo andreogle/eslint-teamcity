@@ -1,4 +1,5 @@
 # eslint-teamcity
+[![npm version](https://badge.fury.io/js/eslint-teamcity.svg)](https://badge.fury.io/js/eslint-teamcity)
 
 > A small [eslint](https://github.com/eslint/eslint) formatter plugin.
 ESLint violations are output nicely in the
