@@ -1,0 +1,23 @@
+{
+  "name": "eslint-teamcity",
+  "version": "1.0.0",
+  "description": "An ESLint formatter plugin for TeamCity",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andreogle/eslint-teamcity.git"
+  },
+  "keywords": [
+    "eslint",
+    "teamcity",
+    "formatter"
+  ],
+  "author": "Andre Ogle <ogleandre@yahoo.com> (https://github.com/andreogle)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreogle/eslint-teamcity/issues"
+  }
+}

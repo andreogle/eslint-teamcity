@@ -1,0 +1,12 @@
+env:
+  node: true
+
+rules:
+  indent: [2, 2]
+  quotes: [2, "single"]
+  no-spaced-func: [2, "never"]
+  space-before-function-paren: [2, "never"]
+  valid-jsdoc: [2, { "prefer": { "return": "returns" }}]
+  space-after-keywords: [2, "always"]
+  space-before-blocks: [2, "always"]
+  space-in-parens: [2, "never"]
