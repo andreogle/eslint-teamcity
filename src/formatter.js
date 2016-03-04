@@ -1,5 +1,5 @@
 /**
- * @fileoverview Teamcity report formatter plugin for ESLint
+ * @fileoverview TeamCity report formatter plugin for ESLint
  * @author Andre Ogle
  */
 
@@ -11,6 +11,8 @@
 
 /**
  * Escape special characters with the respective TeamCity escaping.
+ * See below link for list of special characters:
+ * https://confluence.jetbrains.com/display/TCD9/Build+Script+Interaction+with+TeamCity
  * @param {string} str An error message to display in TeamCity.
  * @returns {string} An error message formatted for display in TeamCity
  */
@@ -23,9 +25,9 @@ function escapeTeamCityString(str) {
     .replace(/\'/g, '|\'')
     .replace(/\n/g, '|n')
     .replace(/\r/g, '|r')
-    .replace(/\u0085/g, '|x')
-    .replace(/\u2028/g, '|l')
-    .replace(/\u2029/g, '|p')
+    .replace(/\u0085/g, '|x') // TeamCity 6
+    .replace(/\u2028/g, '|l') // TeamCity 6
+    .replace(/\u2029/g, '|p') // TeamCity 6
     .replace(/\[/g, '|[')
     .replace(/\]/g, '|]');
 }
