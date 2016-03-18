@@ -52,21 +52,29 @@ module.exports = function(results) {
     output += '##teamcity[testStarted name=\'' + reportName + ': ' +
                escapeTeamCityString(result.filePath) + '\']\n';
 
-    var messageList = [];
+    var errorsList = [];
+    var warningsList = [];
+    var userMessage;
 
     messages.forEach(function(message) {
-      if (message.severity === 2) {
-        messageList.push(
-          'line ' + message.line +
-          ', col ' + message.column + ', ' + message.message
-        );
+      userMessage = 'line ' + (message.line || 0) +
+          ', col ' + (message.column || 0) + ', ' + message.message + (message.ruleId ||  message.ruleId ? ' (' + message.ruleId + ')' : '');
+
+      if (message.fatal || message.severity === 2) {
+        errorsList.push(userMessage);
+      } else {
+        warningsList.push(userMessage);
       }
     });
 
-    if (messageList.length) {
+    if (errorsList.length) {
       output += '##teamcity[testFailed name=\'' + reportName + ': ' +
         escapeTeamCityString(result.filePath) + '\' message=\'' +
-        escapeTeamCityString(messageList.join('\n')) + '\']\n';
+        escapeTeamCityString(errorsList.join('\n')) + '\']\n';
+    } else if (warningsList.length) {
+      output += '##teamcity[testStdOut name=\'' + reportName + ': ' +
+        escapeTeamCityString(result.filePath) + '\' out=\'warning: ' +
+        escapeTeamCityString(warningsList.join('\n')) + '\']\n';
     }
 
     output += '##teamcity[testFinished name=\'' + reportName + ': ' +
