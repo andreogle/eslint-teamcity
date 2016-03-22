@@ -54,11 +54,10 @@ module.exports = function(results) {
 
     var errorsList = [];
     var warningsList = [];
-    var userMessage;
 
     messages.forEach(function(message) {
-      userMessage = 'line ' + (message.line || 0) +
-          ', col ' + (message.column || 0) + ', ' + message.message + (message.ruleId ||  message.ruleId ? ' (' + message.ruleId + ')' : '');
+      var userMessage = 'line ' + (message.line || 0) +
+          ', col ' + (message.column || 0) + ', ' + message.message + (message.ruleId ? ' (' + message.ruleId + ')' : '');
 
       if (message.fatal || message.severity === 2) {
         errorsList.push(userMessage);

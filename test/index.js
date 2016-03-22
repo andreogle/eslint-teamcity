@@ -19,30 +19,46 @@ var createDummyError = function() {
           ruleId: 'no-unreachable'
         }
       ],
-      filePath: 'testfile.js',
+      filePath: 'testfile.js'
     }
   )
 };
 
-var createDummyWarning = function() {
+var createFatalError = function () {
   return (
-    {
-      messages: [
-        {
-          severity: 1, // warning
-          line: 1,
-          column: 1,
-          message: 'Some warning'
-        },
-        {
-          severity: 1, // warning
-          line: 2,
-          column: 2,
-          message: 'This is a test warning.'
-        }
-      ],
-      filePath: 'testfile-warning.js',
-    }
+  {
+    messages: [
+      {
+        fatal: true, // usually omitted, but will be set to true if there's a parsing error (not related to a rule)
+        line: 1,
+        column: 1,
+        message: 'Some fatal error'
+      }
+    ],
+    filePath: 'testfile-fatal.js'
+  }
+  )
+};
+
+var createDummyWarning = function () {
+  return (
+  {
+    messages: [
+      {
+        severity: 1, // warning
+        line: 1,
+        column: 1,
+        message: 'Some warning'
+      },
+      {
+        severity: 1, // warning
+        line: 2,
+        column: 2,
+        message: 'This is a test warning.'
+      }
+    ],
+    filePath: 'testfile-warning.js'
+  }
   )
 };
 
@@ -87,6 +103,30 @@ describe('formatting', function() {
     it('should include all errors within their respective file', function() {
       expect(format(results)).to.contain(
         "message='line 1, col 1, |'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)'"
+      );
+    });
+  });
+
+  describe('file fatal error output', function() {
+    beforeEach(function() {
+      results.push(createFatalError());
+    });
+
+    it('should include filename at the start of each file test', function() {
+      expect(format(results)).to.contain(
+          "##teamcity[testStarted name=\'ESLint Violations: testfile-fatal.js\']"
+      )
+    });
+
+    it('should include filename at the end of each file test', function() {
+      expect(format(results)).to.contain(
+          "##teamcity[testFinished name=\'ESLint Violations: testfile-fatal.js\']"
+      )
+    });
+
+    it('should include all errors within their respective file', function() {
+      expect(format(results)).to.contain(
+          "message='line 1, col 1, Some fatal error'"
       );
     });
   });
