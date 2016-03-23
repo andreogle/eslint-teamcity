@@ -15,13 +15,52 @@ var createDummyError = function() {
           severity: 2, // error
           line: 2,
           column: 1,
-          message: 'This is a test error.'
+          message: 'This is a test error.',
+          ruleId: 'no-unreachable'
         }
       ],
-      filePath: 'testfile.js',
+      filePath: 'testfile.js'
     }
   )
-}
+};
+
+var createFatalError = function () {
+  return (
+  {
+    messages: [
+      {
+        fatal: true, // usually omitted, but will be set to true if there's a parsing error (not related to a rule)
+        line: 1,
+        column: 1,
+        message: 'Some fatal error'
+      }
+    ],
+    filePath: 'testfile-fatal.js'
+  }
+  )
+};
+
+var createDummyWarning = function () {
+  return (
+  {
+    messages: [
+      {
+        severity: 1, // warning
+        line: 1,
+        column: 1,
+        message: 'Some warning'
+      },
+      {
+        severity: 1, // warning
+        line: 2,
+        column: 2,
+        message: 'This is a test warning.'
+      }
+    ],
+    filePath: 'testfile-warning.js'
+  }
+  )
+};
 
 describe('formatting', function() {
   var results = [];
@@ -63,7 +102,55 @@ describe('formatting', function() {
 
     it('should include all errors within their respective file', function() {
       expect(format(results)).to.contain(
-        "message='line 1, col 1, |'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error.'"
+        "message='line 1, col 1, |'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)'"
+      );
+    });
+  });
+
+  describe('file fatal error output', function() {
+    beforeEach(function() {
+      results.push(createFatalError());
+    });
+
+    it('should include filename at the start of each file test', function() {
+      expect(format(results)).to.contain(
+          "##teamcity[testStarted name=\'ESLint Violations: testfile-fatal.js\']"
+      )
+    });
+
+    it('should include filename at the end of each file test', function() {
+      expect(format(results)).to.contain(
+          "##teamcity[testFinished name=\'ESLint Violations: testfile-fatal.js\']"
+      )
+    });
+
+    it('should include all errors within their respective file', function() {
+      expect(format(results)).to.contain(
+          "message='line 1, col 1, Some fatal error'"
+      );
+    });
+  });
+
+  describe('file warning output', function() {
+    beforeEach(function() {
+      results.push(createDummyWarning());
+    });
+
+    it('should include filename at the start of each file test', function() {
+      expect(format(results)).to.contain(
+        "##teamcity[testStarted name='ESLint Violations: testfile-warning.js']"
+      )
+    });
+
+    it('should include filename at the end of each file test', function() {
+      expect(format(results)).to.contain(
+        "##teamcity[testFinished name=\'ESLint Violations: testfile-warning.js\']"
+      )
+    });
+
+    it('should include all warnings within their respective file', function() {
+      expect(format(results)).to.contain(
+        "##teamcity[testStdOut name='ESLint Violations: testfile-warning.js' out='warning: line 1, col 1, Some warning|nline 2, col 2, This is a test warning.'"
       );
     });
   });
