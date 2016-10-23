@@ -5,8 +5,7 @@
 
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
+var utils = require('./utils');
 
 //------------------------------------------------------------------------------
 // Helpers
@@ -46,9 +45,7 @@ var options = {
   }
 };
 
-var config = JSON.parse(fs.readFileSync('package.json'))['eslint-teamcity'] || {};
-
-function getOptionValue(optionName) {
+function getOptionValue(config, optionName) {
   if (optionName in config) {
     return config[optionName];
   }
@@ -60,8 +57,10 @@ function getOptionValue(optionName) {
 //------------------------------------------------------------------------------
 module.exports = function(results) {
 
-  var optionDetails = getOptionValue('details');
-  var optionSummary = getOptionValue('summary');
+  var config = JSON.parse(utils.loadConfig())['eslint-teamcity'] || {};
+
+  var optionDetails = getOptionValue(config, 'details');
+  var optionSummary = getOptionValue(config, 'summary');
 
   var output = '';
   var errorCount = 0;
