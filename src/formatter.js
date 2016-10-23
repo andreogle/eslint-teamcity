@@ -51,9 +51,8 @@ var config = JSON.parse(fs.readFileSync('package.json'))['eslint-teamcity'] || {
 function getOptionValue(optionName) {
   if (optionName in config) {
     return config[optionName];
-  } else {
-    return options[optionName].default;
   }
+  return options[optionName].default;
 }
 
 //------------------------------------------------------------------------------
