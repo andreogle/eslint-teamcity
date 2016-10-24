@@ -1,5 +1,7 @@
 var expect = require('chai').expect;
+var sinon = require('sinon');
 var format = require('../src/formatter');
+var utils = require('../src/utils');
 
 var createDummyError = function() {
   return (
@@ -154,6 +156,80 @@ describe('formatting', function() {
       );
     });
   });
+
+  describe('default output', function() {
+    beforeEach(function() {
+      results.push(createDummyWarning());
+    });
+
+    it('should not contain total warning count', function() {
+      expect(format(results)).to.not.contain(
+        "##teamcity[buildStatisticValue key=\'ESLintWarningCount\'"
+      )
+    });
+
+    it('should not contain total error count', function() {
+      expect(format(results)).to.not.contain(
+        "##teamcity[buildStatisticValue key=\'ESLintErrorCount\'"
+      )
+    });
+  });
+
+  describe('not configured with package.json', function() {
+    before(function() {
+      var configStub = sinon.stub(utils, 'loadConfig');
+      configStub.returns('{ "otherPackageJsonKeys": "value" }');
+    });
+
+    beforeEach(function() {
+      results.push(createDummyWarning());
+    });
+
+    after(function() {
+      utils.loadConfig.restore();
+    });
+
+    it('output should not contain total warning count', function() {
+      expect(format(results)).to.not.contain(
+        "##teamcity[buildStatisticValue key=\'ESLintWarningCount\'"
+      )
+    });
+  });
+
+  describe('configured with package.json', function() {
+    before(function() {
+      var configStub = sinon.stub(utils, 'loadConfig');
+      configStub.returns('{ "eslint-teamcity": { "summary": true, "details": false } }');
+    });
+
+    beforeEach(function() {
+      results.push(createDummyWarning());
+      results.push(createDummyError());
+    });
+
+    after(function() {
+      utils.loadConfig.restore();
+    });
+
+    it('output should contain total warning count with summary enabled', function() {
+      expect(format(results)).to.contain(
+        "##teamcity[buildStatisticValue key=\'ESLintWarningCount\' value=\'2\'"
+      )
+    });
+
+    it('output should contain total error count with summary enabled', function() {
+      expect(format(results)).to.contain(
+        "##teamcity[buildStatisticValue key=\'ESLintErrorCount\' value=\'2\'"
+      )
+    });
+
+    it('output should not contain detailed stats', function() {
+      expect(format(results)).to.not.contain(
+        "This is a test error"
+      )
+    });
+  });
+
 });
 
 describe('escaping special characters', function() {
