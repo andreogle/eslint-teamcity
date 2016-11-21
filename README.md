@@ -52,21 +52,15 @@ Kick off a new build, by deploying again, and you should see your build errors -
 
 ![Example TeamCity Output](https://i.imgur.com/DkwEPEN.jpg)
 
+## Extras
+
+eslint-teamcity will also output statistic values which you can use to in TeamCity to track your progress in resolving errors!
+
+Graphs can be setup from the Builds -> Statistics tab.
+![Example Statistics Output](http://imgur.com/oHbiuZE)
+
 ## Issues
 
 I will try keep this project up to date, but please log any issues
 [here](https://github.com/andreogle/eslint-teamcity/issues).
 Any pull requests are also welcome!
-
-## Configuration
-
-You can add `eslint-teamcity` section to `package.json`. As of now 2 parameters are supported:
-
-```
-details: boolean // defaults to true
-summary: boolean // defaults to false
-```
-
-If `summary` is set to true then total error and warning count will be reported to TeamCity statistics.
-
-If `details` is set to false then detailed file breakdown will not be reported.
