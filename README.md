@@ -54,7 +54,7 @@ Kick off a new build, by deploying again, and you should see your build errors -
 
 ## Extras
 
-eslint-teamcity will also output statistic values which you can use to in TeamCity to track your progress in resolving errors!
+eslint-teamcity will also output statistic values which you can use in TeamCity to track your progress in resolving errors!
 
 Graphs can be setup from the Builds -> Statistics tab.
 ![Example Statistics Output](http://imgur.com/oHbiuZE)
