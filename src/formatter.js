@@ -86,12 +86,8 @@ module.exports = function(results) {
 
   output += '##teamcity[testSuiteFinished name=\'' + reportName + '\']\n';
 
-  if (errorCount !== 0) {
-    output += '##teamcity[buildStatisticValue key=\'ESLintErrorCount\' value=\'' + errorCount +'\' ]\n';
-  }
-  if (warningCount !== 0) {
-    output += '##teamcity[buildStatisticValue key=\'ESLintWarningCount\' value=\'' + warningCount +'\' ]\n';
-  }
+  output += '##teamcity[buildStatisticValue key=\'ESLintErrorCount\' value=\'' + errorCount +'\' ]\n';
+  output += '##teamcity[buildStatisticValue key=\'ESLintWarningCount\' value=\'' + warningCount +'\' ]\n';
 
   return output;
 };
