@@ -14,19 +14,20 @@
   "keywords": [
     "eslint",
     "teamcity",
-    "formatter"
+    "formatter",
+    "linting"
   ],
-  "author": "Andre Ogle <ogleandre@yahoo.com> (https://github.com/andreogle)",
+  "author": "Andre Ogle <ogleandre@gmail.com> (https://github.com/andreogle)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/andreogle/eslint-teamcity/issues"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.11.8",
-    "eslint": "^3.8.1",
-    "istanbul": "^0.4.2",
-    "mocha": "^2.4.5",
-    "sinon": "^1.17.6"
+    "coveralls": "^2.12.0",
+    "eslint": "^3.18.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "sinon": "^2.1.0"
   }
 }
