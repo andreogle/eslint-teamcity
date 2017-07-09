@@ -10,6 +10,12 @@ if (require.main === module) {
   module.exports = main;
 }
 
+/**
+ * main function
+ * @param {String} input - input data stringfy json
+ * @param {Object} varNames - names of the vars
+ * @return {String}
+ */
 function main(input) {
   return require('./src/formatter')(input);
 }
