@@ -31,8 +31,23 @@ describe('support interface',function() {
     });
   });
 
-  it('requirejs',function() {
-    result = require(pathToIndex)(input);
-    expect(result).to.contain('##teamcity');
+  describe('requirejs',function() {
+    it('basic', function() {
+      result = require(pathToIndex)(input);
+      expect(result).to.contain('##teamcity');
+    });
+
+    it('with parameters', function() {
+      var parameters = {
+        errorCountName: 'EslintInspectionStatsE',
+        warningCountName: 'EslintInspectionStatsW'
+
+      };
+      result = require(pathToIndex)(input, parameters);
+      expect(result).to.contain('ESLint Violations');
+      expect(result).to.contain('EslintInspectionStatsE');
+      expect(result).to.contain('EslintInspectionStatsW');
+    });
+
   });
 });
