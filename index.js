@@ -12,9 +12,8 @@ if (require.main === module) {
 
 /**
  * main function
- * @param {String} input - input data stringfy json
- * @param {Object} varNames - names of the vars
- * @return {String}
+ * @param {String} input - input data stringify json
+ * @returns {String} format result
  */
 function main(input) {
   return require('./src/formatter')(input);
