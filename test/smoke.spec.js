@@ -11,28 +11,28 @@ var input = [];
 var result;
 describe('support interface',function() {
 
-    before(function () {
-        input.push(helper.createDummyError());
-    });
+  before(function() {
+    input.push(helper.createDummyError());
+  });
 
   describe('cmd',function() {
-    it('as eslint formatter', function () {
-       result = sh.exec('eslint --format ' + '\'' + pathToIndex + '\' ' + pathToIndex);
-       expect(result.stdout).to.contain("##teamcity");
+    it('as eslint formatter', function() {
+      result = sh.exec('eslint --format ' + '\'' + pathToIndex + '\' ' + pathToIndex);
+      expect(result.stdout).to.contain('##teamcity');
     });
 
-    it('as standalone',function () {
-        fs.writeJSONSync(pathToTestJson, input);
-        result = sh.exec('cd ' + basePath + '; node ' + 'index.js ' + pathToTestJson);
-        expect(result.stdout).to.contain("##teamcity");
-        expect(result.stderr).to.equal('');
+    it('as standalone',function() {
+      fs.writeJSONSync(pathToTestJson, input);
+      result = sh.exec('cd ' + basePath + '; node ' + 'index.js ' + pathToTestJson);
+      expect(result.stdout).to.contain('##teamcity');
+      expect(result.stderr).to.equal('');
 
-        sh.rm(pathToTestJson);
+      sh.rm(pathToTestJson);
     });
   });
 
   it('requirejs',function() {
     result = require(pathToIndex)(input);
-    expect(result).to.contain("##teamcity");
+    expect(result).to.contain('##teamcity');
   });
 });
