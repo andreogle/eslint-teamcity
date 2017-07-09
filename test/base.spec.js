@@ -1,67 +1,7 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var format = require('../src/formatter');
-
-var createDummyError = function() {
-  return (
-    {
-      messages: [
-        {
-          severity: 2, // error
-          line: 1,
-          column: 1,
-          message: '\'\n\r\u0085\u2028\u2029|[]'
-        },
-        {
-          severity: 2, // error
-          line: 2,
-          column: 1,
-          message: 'This is a test error.',
-          ruleId: 'no-unreachable'
-        }
-      ],
-      filePath: 'testfile.js'
-    }
-  );
-};
-
-var createFatalError = function() {
-  return (
-    {
-      messages: [
-        {
-          fatal: true, // usually omitted, but will be set to true if there's a parsing error (not related to a rule)
-          line: 1,
-          column: 1,
-          message: 'Some fatal error'
-        }
-      ],
-      filePath: 'testfile-fatal.js'
-    }
-  );
-};
-
-var createDummyWarning = function() {
-  return (
-    {
-      messages: [
-        {
-          severity: 1, // warning
-          line: 1,
-          column: 1,
-          message: 'Some warning'
-        },
-        {
-          severity: 1, // warning
-          line: 2,
-          column: 2,
-          message: 'This is a test warning.'
-        }
-      ],
-      filePath: 'testfile-warning.js'
-    }
-  );
-};
+var helper = require('./generateEsLintResult');
 
 describe('formatting', function() {
   var results = [];
@@ -86,7 +26,7 @@ describe('formatting', function() {
 
   describe('file error output', function() {
     beforeEach(function() {
-      results.push(createDummyError());
+      results.push(helper.createDummyError());
     });
 
     it('should include filename at the start of each file test', function() {
@@ -110,7 +50,7 @@ describe('formatting', function() {
 
   describe('file fatal error output', function() {
     beforeEach(function() {
-      results.push(createFatalError());
+      results.push(helper.createFatalError());
     });
 
     it('should include filename at the start of each file test', function() {
@@ -134,7 +74,7 @@ describe('formatting', function() {
 
   describe('file warning output', function() {
     beforeEach(function() {
-      results.push(createDummyWarning());
+      results.push(helper.createDummyWarning());
     });
 
     it('should include filename at the start of each file test', function() {
@@ -158,8 +98,8 @@ describe('formatting', function() {
 
   describe('build statistics', function() {
     beforeEach(function() {
-      results.push(createDummyWarning());
-      results.push(createDummyError());
+      results.push(helper.createDummyWarning());
+      results.push(helper.createDummyError());
     });
 
     it('should contain total warning count', function() {
@@ -184,7 +124,7 @@ describe('escaping special characters', function() {
   });
 
   it('should replace specials with TeamCity equivalents', function() {
-    results.push(createDummyError());
+    results.push(helper.createDummyError());
     expect(format(results)).to.contain('|\'|n|r|x|l|p|||[|]');
   });
 });
