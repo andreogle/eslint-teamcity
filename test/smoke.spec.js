@@ -15,14 +15,20 @@ describe('support interface',function() {
         input.push(helper.createDummyError());
     });
 
-  it('cmd',function() {
+  describe('cmd',function() {
+    it('as eslint formatter', function () {
+       result = sh.exec('eslint --format ' + '\'' + pathToIndex + '\' ' + pathToIndex);
+       expect(result.stdout).to.contain("##teamcity");
+    });
 
-    fs.writeJSONSync(pathToTestJson, input);
-    result = sh.exec('cd ' + basePath + '; node ' + 'index.js ' + pathToTestJson);
-    expect(result.stdout).to.contain("##teamcity");
-    expect(result.stderr).to.equal('');
+    it('as standalone',function () {
+        fs.writeJSONSync(pathToTestJson, input);
+        result = sh.exec('cd ' + basePath + '; node ' + 'index.js ' + pathToTestJson);
+        expect(result.stdout).to.contain("##teamcity");
+        expect(result.stderr).to.equal('');
 
-    sh.rm(pathToTestJson);
+        sh.rm(pathToTestJson);
+    });
   });
 
   it('requirejs',function() {
