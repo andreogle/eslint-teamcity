@@ -38,12 +38,12 @@ describe('support interface',function() {
     });
 
     it('with parameters', function() {
-      var parameters = {
+      var teamcityPropNames = {
         errorCountName: 'EslintInspectionStatsE',
         warningCountName: 'EslintInspectionStatsW'
 
       };
-      result = require(pathToIndex)(input, parameters);
+      result = require(pathToIndex)(input, teamcityPropNames);
       expect(result).to.contain('ESLint Violations');
       expect(result).to.contain('EslintInspectionStatsE');
       expect(result).to.contain('EslintInspectionStatsW');

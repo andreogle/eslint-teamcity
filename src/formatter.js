@@ -35,14 +35,14 @@ function escapeTeamCityString(str) {
 //------------------------------------------------------------------------------
 // Public Interface
 //------------------------------------------------------------------------------
-module.exports = function(results, _varNames) {
+module.exports = function(results, teamcityPropNames) {
   var output = '';
   var errorCount = 0;
   var warningCount = 0;
   var reportName;
   var errorCountName;
   var warningCountName;
-  var varNames = _varNames ? _varNames : {};
+  var varNames = teamcityPropNames || {};
 
   reportName = varNames.reportName || 'ESLint Violations';
   errorCountName = varNames.errorCountName || 'ESLintErrorCount';
@@ -92,8 +92,8 @@ module.exports = function(results, _varNames) {
 
   output += '##teamcity[testSuiteFinished name=\'' + reportName + '\']\n';
 
-  output += '##teamcity[buildStatisticValue key=\''+errorCountName + '\' value=\'' + errorCount +'\' ]\n';
-  output += '##teamcity[buildStatisticValue key=\''+warningCountName + '\' value=\'' + warningCount +'\' ]\n';
+  output += '##teamcity[buildStatisticValue key=\'' + errorCountName + '\' value=\'' + errorCount +'\' ]\n';
+  output += '##teamcity[buildStatisticValue key=\'' + warningCountName + '\' value=\'' + warningCount +'\' ]\n';
 
   return output;
 };
