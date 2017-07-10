@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var format = require('../src/formatter');
-var helper = require('./generateEsLintResult');
+var eslintResultGenerator = require('./eslintResultGenerator');
 
 describe('formatting', function() {
   var results = [];
@@ -26,7 +26,7 @@ describe('formatting', function() {
 
   describe('file error output', function() {
     beforeEach(function() {
-      results.push(helper.createDummyError());
+      results.push(eslintResultGenerator.createDummyError());
     });
 
     it('should include filename at the start of each file test', function() {
@@ -50,7 +50,7 @@ describe('formatting', function() {
 
   describe('file fatal error output', function() {
     beforeEach(function() {
-      results.push(helper.createFatalError());
+      results.push(eslintResultGenerator.createFatalError());
     });
 
     it('should include filename at the start of each file test', function() {
@@ -74,7 +74,7 @@ describe('formatting', function() {
 
   describe('file warning output', function() {
     beforeEach(function() {
-      results.push(helper.createDummyWarning());
+      results.push(eslintResultGenerator.createDummyWarning());
     });
 
     it('should include filename at the start of each file test', function() {
@@ -98,8 +98,8 @@ describe('formatting', function() {
 
   describe('build statistics', function() {
     beforeEach(function() {
-      results.push(helper.createDummyWarning());
-      results.push(helper.createDummyError());
+      results.push(eslintResultGenerator.createDummyWarning());
+      results.push(eslintResultGenerator.createDummyError());
     });
 
     it('should contain total warning count', function() {
@@ -124,7 +124,7 @@ describe('escaping special characters', function() {
   });
 
   it('should replace specials with TeamCity equivalents', function() {
-    results.push(helper.createDummyError());
+    results.push(eslintResultGenerator.createDummyError());
     expect(format(results)).to.contain('|\'|n|r|x|l|p|||[|]');
   });
 });
