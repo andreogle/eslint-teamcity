@@ -3,7 +3,7 @@ var sinon = require('sinon');
 var sh = require('shelljs');
 var path = require('path');
 var basePath = path.resolve(__dirname, '..');
-var helper = require('./generateEsLintResult');
+var eslintResultGenerator = require('./generateEsLintResult');
 var fs = require('fs-extra');
 var pathToTestJson = path.resolve(__dirname, 'result.json');
 var pathToIndex = path.resolve(__dirname, '..', 'index.js');
@@ -12,7 +12,7 @@ var result;
 describe('support interface',function() {
 
   before(function() {
-    input.push(helper.createDummyError());
+    input.push(eslintResultGenerator.createDummyError());
   });
 
   describe('cmd',function() {
@@ -41,8 +41,8 @@ describe('support interface',function() {
       var teamcityPropNames = {
         errorCountName: 'EslintInspectionStatsE',
         warningCountName: 'EslintInspectionStatsW'
-
       };
+
       result = require(pathToIndex)(input, teamcityPropNames);
       expect(result).to.contain('ESLint Violations');
       expect(result).to.contain('EslintInspectionStatsE');
