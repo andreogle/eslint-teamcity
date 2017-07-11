@@ -26,7 +26,7 @@ npm install eslint-teamcity --save-dev
 ```sh
   eslint -f json myfiletolint.js -o result.json; node node_modules/eslint-teamcity/index.js result.json
 ```
-* as nodejs module
+* require eslint-teamcity and run directly in your JavaScript:
 ```javascript
   require('eslint-teamcity')(result);
 ```
