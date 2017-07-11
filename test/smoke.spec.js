@@ -48,6 +48,5 @@ describe('support interface',function() {
       expect(result).to.contain('EslintInspectionStatsE');
       expect(result).to.contain('EslintInspectionStatsW');
     });
-
   });
 });
