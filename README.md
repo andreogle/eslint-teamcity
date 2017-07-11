@@ -24,7 +24,7 @@ npm install eslint-teamcity --save-dev
 ```
 * as post runnig formatter, work with standart eslint json report
 ```sh
-  node index.js result.json
+  eslint -f json myfiletolint.js -o result.json; node node_modules/eslint-teamcity/index.js result.json
 ```
 * as nodejs module
 ```javascript
