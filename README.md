@@ -25,8 +25,12 @@ eslint --format ./node_modules/eslint-teamcity/index.js myfiletolint.js
 ```
 
 ##### Running against a generated ESLint JSON report:
+Generate an ESLint JSON report:
 ```sh
-eslint -f json -o result.json app/myjavascriptdirectory // Generate a JSON report
+eslint -f json -o result.json app/myjavascriptdirectory
+```
+Run eslint-teamcity against the new report:
+```sh
 node ./node_modules/eslint-teamcity/index.js result.json
 ```
 
