@@ -19,12 +19,11 @@ npm install eslint-teamcity --save-dev
 
 ## Usage
 There are currently 3 ways to use eslint-teamcity:
-##### As a regular ESLint formatter plugin:
+##### 1. As a regular ESLint formatter plugin:
 ```sh
 eslint --format ./node_modules/eslint-teamcity/index.js myfiletolint.js
 ```
-
-##### Running against a generated ESLint JSON report:
+##### 2. Running against a generated ESLint JSON report:
 Generate an ESLint JSON report:
 ```sh
 eslint -f json -o result.json app/myjavascriptdirectory
@@ -33,8 +32,7 @@ Run eslint-teamcity against the new report:
 ```sh
 node ./node_modules/eslint-teamcity/index.js result.json
 ```
-
-##### Requiring and running directly from inside your JavaScript code:
+##### 3. Requiring and running directly from inside your JavaScript code:
 ```javascript
 var eslintTeamcity = require('eslint-teamcity');
 console.log(eslintTeamcity(result));
