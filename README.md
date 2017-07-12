@@ -11,37 +11,42 @@ TeamCity 9.1.x/10.0.x/2017 and ESLint 1/2/3/4.
 
 ## Installation
 
-[Use npm](https://docs.npmjs.com/cli/install).
+[Use npm](https://docs.npmjs.com/cli/install) or [Yarn](https://yarnpkg.com/en/docs/install).
 
 ```sh
 npm install eslint-teamcity --save-dev
 ```
 
 ## Usage
-* as onrun eslint formatter:
+There are currently 3 ways to use eslint-teamcity:
+##### As a regular ESLint formatter plugin:
 ```sh
-  eslint --format './node_modules/eslint-teamcity/index.js' myfiletolint.js
+eslint --format ./node_modules/eslint-teamcity/index.js myfiletolint.js
 ```
-* as post runnig formatter, work with standart eslint json report
+
+##### Running against a generated ESLint JSON report:
 ```sh
-  eslint -f json myfiletolint.js -o result.json; node node_modules/eslint-teamcity/index.js result.json
+eslint -f json myfiletolint.js -o result.json // Generate a JSON report
+node node_modules/eslint-teamcity/index.js result.json
 ```
-* require eslint-teamcity and run directly in your JavaScript:
+
+##### Requiring and running directly from inside your JavaScript code:
 ```javascript
-  require('eslint-teamcity')(result);
+var eslintTeamcity = require('eslint-teamcity');
+console.log(eslintTeamcity(result));
 ```
 
 ## [gulp-eslint](https://github.com/adametry/gulp-eslint) integration
 ```javascript
-var gulp = require('gulp'),
-    eslint = require('gulp-eslint'),
-    teamcity = require('eslint-teamcity');
+var gulp = require('gulp');
+var eslint = require('gulp-eslint');
+var teamcity = require('eslint-teamcity');
 
 gulp.task('lint', function () {
-    return gulp.src(['js/**/*.js'])
-        .pipe(eslint())
-        .pipe(eslint.format(teamcity))
-        .pipe(eslint.failAfterError());
+  return gulp.src(['js/**/*.js'])
+    .pipe(eslint())
+    .pipe(eslint.format(teamcity))
+    .pipe(eslint.failAfterError());
 });
 ```
 See the [gulp-eslint](https://github.com/adametry/gulp-eslint#usage) docs for
