@@ -32,15 +32,21 @@ function escapeTeamCityString(str) {
     .replace(/\]/g, '|]');
 }
 
-var reportName = 'ESLint Violations';
-
 //------------------------------------------------------------------------------
 // Public Interface
 //------------------------------------------------------------------------------
-module.exports = function(results) {
+module.exports = function(results, teamcityPropNames) {
   var output = '';
   var errorCount = 0;
   var warningCount = 0;
+  var reportName;
+  var errorCountName;
+  var warningCountName;
+  var varNames = teamcityPropNames || {};
+
+  reportName = varNames.reportName || 'ESLint Violations';
+  errorCountName = varNames.errorCountName || 'ESLintErrorCount';
+  warningCountName = varNames.warningCountName || 'ESLintWarningCount';
 
   output += '##teamcity[testSuiteStarted name=\'' + reportName + '\']\n';
 
@@ -86,8 +92,8 @@ module.exports = function(results) {
 
   output += '##teamcity[testSuiteFinished name=\'' + reportName + '\']\n';
 
-  output += '##teamcity[buildStatisticValue key=\'ESLintErrorCount\' value=\'' + errorCount +'\' ]\n';
-  output += '##teamcity[buildStatisticValue key=\'ESLintWarningCount\' value=\'' + warningCount +'\' ]\n';
+  output += '##teamcity[buildStatisticValue key=\'' + errorCountName + '\' value=\'' + errorCount +'\' ]\n';
+  output += '##teamcity[buildStatisticValue key=\'' + warningCountName + '\' value=\'' + warningCount +'\' ]\n';
 
   return output;
 };

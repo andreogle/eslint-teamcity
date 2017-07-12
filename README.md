@@ -18,8 +18,17 @@ npm install eslint-teamcity --save-dev
 ```
 
 ## Usage
+* as onrun eslint formatter:
 ```sh
   eslint --format './node_modules/eslint-teamcity/index.js' myfiletolint.js
+```
+* as post runnig formatter, work with standart eslint json report
+```sh
+  eslint -f json myfiletolint.js -o result.json; node node_modules/eslint-teamcity/index.js result.json
+```
+* require eslint-teamcity and run directly in your JavaScript:
+```javascript
+  require('eslint-teamcity')(result);
 ```
 
 ## [gulp-eslint](https://github.com/adametry/gulp-eslint) integration
