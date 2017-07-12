@@ -11,7 +11,7 @@ TeamCity 9.1.x/10.0.x/2017 and ESLint 1/2/3/4.
 
 ## Installation
 
-[Use npm](https://docs.npmjs.com/cli/install) or [Yarn](https://yarnpkg.com/en/docs/install).
+Prerequisite: You must have either [npm](https://docs.npmjs.com/cli/install) or [Yarn](https://yarnpkg.com/en/docs/install) installed.
 
 ```sh
 npm install eslint-teamcity --save-dev
@@ -26,8 +26,8 @@ eslint --format ./node_modules/eslint-teamcity/index.js myfiletolint.js
 
 ##### Running against a generated ESLint JSON report:
 ```sh
-eslint -f json myfiletolint.js -o result.json // Generate a JSON report
-node node_modules/eslint-teamcity/index.js result.json
+eslint -f json -o result.json app/myjavascriptdirectory // Generate a JSON report
+node ./node_modules/eslint-teamcity/index.js result.json
 ```
 
 ##### Requiring and running directly from inside your JavaScript code:
