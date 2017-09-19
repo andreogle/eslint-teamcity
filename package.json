@@ -27,9 +27,9 @@
     "coveralls": "^2.12.0",
     "eslint": "^3.18.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
+    "mocha": "^3.5.3",
     "shelljs": "^0.7.8",
-    "sinon": "^2.1.0"
+    "sinon": "^2.4.1"
   },
   "dependencies": {
     "fs-extra": "^3.0.1"
