@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var format = require('../src/formatter');
-var eslintResultGenerator = require('./eslintResultGenerator');
+var eslintResultGenerator = require('./helpers/eslint-result-generator');
 
 describe('formatting', function() {
   var results = [];

@@ -2,21 +2,21 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var sh = require('shelljs');
 var path = require('path');
-var basePath = path.resolve(__dirname, '..');
-var eslintResultGenerator = require('./eslintResultGenerator');
 var fs = require('fs-extra');
+var basePath = path.resolve(__dirname, '..');
+var eslintResultGenerator = require('./helpers/eslint-result-generator');
 var pathToTestJson = path.resolve(__dirname, 'result.json');
 var pathToIndex = path.resolve(__dirname, '..', 'index.js');
+
 var input = [];
 var result;
 describe('support interface',function() {
-
   before(function() {
     input.push(eslintResultGenerator.createDummyError());
   });
 
   describe('cmd',function() {
-    it('as eslint formatter', function() {
+    it('as eslint formatter plugin', function() {
       result = sh.exec('eslint --format ' + '\'' + pathToIndex + '\' ' + pathToIndex);
       expect(result.stdout).to.contain('##teamcity');
     });

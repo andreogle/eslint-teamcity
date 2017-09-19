@@ -97,3 +97,4 @@ module.exports = function(results, teamcityPropNames) {
 
   return output;
 };
+
