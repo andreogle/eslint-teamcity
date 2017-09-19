@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 'use strict';
-var fs = require('fs-extra'),
-  procArg = process.argv;
+
+var fs = require('fs-extra');
+var procArg = process.argv;
 
 if (require.main === module) {
   process.stdout.write(main(fs.readJSONSync(procArg[2])))
