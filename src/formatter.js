@@ -12,7 +12,7 @@
 /**
  * Escape special characters with the respective TeamCity escaping.
  * See below link for list of special characters:
- * https://confluence.jetbrains.com/display/TCD9/Build+Script+Interaction+with+TeamCity
+ * https://confluence.jetbrains.com/display/TCD10/Build+Script+Interaction+with+TeamCity
  * @param {string} str An error message to display in TeamCity.
  * @returns {string} An error message formatted for display in TeamCity
  */
