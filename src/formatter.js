@@ -65,7 +65,7 @@ module.exports = function(results, teamcityPropNames) {
         `${message.message} ${message.ruleId ? ` (${message.ruleId})` : ''}`;
 
       inspectionsList.push(
-        `##teamcity[inspection typeId='${inspectionId} message='${errorMessage}' ` +
+        `##teamcity[inspection typeId='${inspectionId}' message='${errorMessage}' ` +
         `file='${filePath}' line='${message.line || 0}' SEVERITY='${isError ? 'ERROR' : 'WARNING'}`
       );
 
