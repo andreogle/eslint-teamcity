@@ -36,65 +36,45 @@ function escapeTeamCityString(str) {
 // Public Interface
 //------------------------------------------------------------------------------
 module.exports = function(results, teamcityPropNames) {
-  var output = '';
-  var errorCount = 0;
-  var warningCount = 0;
-  var reportName;
-  var errorCountName;
-  var warningCountName;
-  var varNames = teamcityPropNames || {};
+  const varNames = teamcityPropNames || {};
+  const reportName = varNames.reportName || 'ESLint Violations';
+  const inspectionCountName = varNames.errorCountName || 'ESLintInspectionCount';
 
-  reportName = varNames.reportName || 'ESLint Violations';
-  errorCountName = varNames.errorCountName || 'ESLintErrorCount';
-  warningCountName = varNames.warningCountName || 'ESLintWarningCount';
+  const inspectionsList = [];
+  let inspectionCount = 0;
 
-  output += '##teamcity[testSuiteStarted name=\'' + reportName + '\']\n';
-
-  results.forEach(function(result) {
-    var messages = result.messages;
+  results.forEach(result => {
+    const messages = result.messages;
 
     if (messages.length === 0) {
       return;
     }
 
-    output += '##teamcity[testStarted name=\'' + reportName + ': ' +
-      escapeTeamCityString(result.filePath) + '\']\n';
+    const filePath = escapeTeamCityString(result.filePath);
 
-    var errorsList = [];
-    var warningsList = [];
+    messages.forEach(message => {
+      const isError = message.fatal || message.severity === 2;
+      const inspectionId = `inspection-${inspectionCount + 1}`;
 
-    messages.forEach(function(message) {
-      var userMessage = 'line ' + (message.line || 0) +
-        ', col ' + (message.column || 0) +
-        ', ' + message.message + (message.ruleId ? ' (' + message.ruleId + ')' : '');
+      inspectionsList.push(
+        `##teamcity[inspectionType id='${inspectionId}' category='ESLint Violations' ` +
+        `name='${inspectionId}' description='ESlint Violations']`
+      );
 
-      if (message.fatal || message.severity === 2) {
-        errorsList.push(userMessage);
-        errorCount++;
-      } else {
-        warningsList.push(userMessage);
-        warningCount++;
-      }
+      const errorMessage = `line ${message.line || 0}, col ${message.column || 0}, ` +
+        `${message.message} ${message.ruleId ? ` (${message.ruleId})` : ''}`;
+
+      inspectionsList.push(
+        `##teamcity[inspection typeId='${inspectionId} message='${errorMessage}' ` +
+        `file='${filePath}' line='${message.line || 0}' SEVERITY='${isError ? 'ERROR' : 'WARNING'}`
+      );
+
+      inspectionCount++;
     });
-
-    if (errorsList.length) {
-      output += '##teamcity[testFailed name=\'' + reportName + ': ' +
-        escapeTeamCityString(result.filePath) + '\' message=\'' +
-        escapeTeamCityString(errorsList.join('\n')) + '\']\n';
-    } else if (warningsList.length) {
-      output += '##teamcity[testStdOut name=\'' + reportName + ': ' +
-        escapeTeamCityString(result.filePath) + '\' out=\'warning: ' +
-        escapeTeamCityString(warningsList.join('\n')) + '\']\n';
-    }
-    output += '##teamcity[testFinished name=\'' + reportName + ': ' +
-      escapeTeamCityString(result.filePath) + '\']\n';
   });
 
-  output += '##teamcity[testSuiteFinished name=\'' + reportName + '\']\n';
+  inspectionsList.push(`##teamcity[buildStatisticValue key='${inspectionCountName}' value='${inspectionCount}']`);
 
-  output += '##teamcity[buildStatisticValue key=\'' + errorCountName + '\' value=\'' + errorCount +'\' ]\n';
-  output += '##teamcity[buildStatisticValue key=\'' + warningCountName + '\' value=\'' + warningCount +'\' ]\n';
-
-  return output;
+  return inspectionsList.join('\n');
 };
 
