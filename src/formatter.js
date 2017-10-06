@@ -62,7 +62,7 @@ module.exports = function(results, teamcityPropNames) {
       );
 
       const errorMessage = `line ${message.line || 0}, col ${message.column || 0}, ` +
-        `${message.message} ${message.ruleId ? ` (${message.ruleId})` : ''}`;
+        `${message.message}${message.ruleId ? ` (${message.ruleId})` : ''}`;
 
       inspectionsList.push(
         `##teamcity[inspection typeId='${inspectionId}' message='${errorMessage}' ` +
