@@ -66,7 +66,7 @@ module.exports = function(results, teamcityPropNames) {
 
       inspectionsList.push(
         `##teamcity[inspection typeId='${inspectionId}' message='${errorMessage}' ` +
-        `file='${filePath}' line='${message.line || 0}' SEVERITY='${isError ? 'ERROR' : 'WARNING'}`
+        `file='${filePath}' line='${message.line || 0}' SEVERITY='${isError ? 'ERROR' : 'WARNING'}'`
       );
 
       inspectionCount++;
