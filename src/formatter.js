@@ -45,9 +45,11 @@ module.exports = function(results, teamcityPropNames) {
   let inspectionCount = 0;
 
   results.forEach(result => {
-    result.messages.forEach(message => {
+    const filePath = escapeTeamCityString(result.filePath);
+
+    messages.forEach(message => {
       const isError = message.fatal || message.severity === 2;
-      const inspectionId = message.ruleId;
+      const inspectionId = `inspection-${inspectionCount + 1}`;
 
       inspectionsList.push(
         `##teamcity[inspectionType id='${inspectionId}' category='ESLint violations' ` +
