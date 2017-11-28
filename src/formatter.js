@@ -49,7 +49,7 @@ module.exports = function(results, teamcityPropNames) {
 
     result.messages.forEach(message => {
       const isError = message.fatal || message.severity === 2;
-      const inspectionId = `inspection-${inspectionCount + 1}`;
+      const inspectionId = message.ruleId;
 
       inspectionsList.push(
         `##teamcity[inspectionType id='${inspectionId}' category='ESLint violations' ` +
