@@ -47,7 +47,7 @@ module.exports = function(results, teamcityPropNames) {
   results.forEach(result => {
     const filePath = escapeTeamCityString(result.filePath);
 
-    messages.forEach(message => {
+    result.messages.forEach(message => {
       const isError = message.fatal || message.severity === 2;
       const inspectionId = `inspection-${inspectionCount + 1}`;
 
