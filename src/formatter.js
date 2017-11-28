@@ -41,20 +41,13 @@ module.exports = function(results, teamcityPropNames) {
   const inspectionCountName = varNames.errorCountName || 'ESLintInspectionCount';
 
   const inspectionsList = [];
+
   let inspectionCount = 0;
 
   results.forEach(result => {
-    const messages = result.messages;
-
-    if (messages.length === 0) {
-      return;
-    }
-
-    const filePath = escapeTeamCityString(result.filePath);
-
-    messages.forEach(message => {
+    result.messages.forEach(message => {
       const isError = message.fatal || message.severity === 2;
-      const inspectionId = `inspection-${inspectionCount + 1}`;
+      const inspectionId = message.ruleId;
 
       inspectionsList.push(
         `##teamcity[inspectionType id='${inspectionId}' category='ESLint violations' ` +
