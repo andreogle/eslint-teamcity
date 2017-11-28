@@ -57,7 +57,7 @@ module.exports = function(results, teamcityPropNames) {
       const inspectionId = `inspection-${inspectionCount + 1}`;
 
       inspectionsList.push(
-        `##teamcity[inspectionType id='${inspectionId}' category='ESLint Violations' ` +
+        `##teamcity[inspectionType id='${inspectionId}' category='ESLint violations' ` +
         `name='${inspectionId}' description='ESlint Violations']`
       );
 
@@ -66,7 +66,7 @@ module.exports = function(results, teamcityPropNames) {
 
       inspectionsList.push(
         `##teamcity[inspection typeId='${inspectionId}' message='${errorMessage}' ` +
-        `file='${filePath}' line='${message.line || 0}' SEVERITY='${isError ? 'ERROR' : 'WARNING'}'`
+        `file='${filePath}' line='${message.line || 0}' SEVERITY='${isError ? 'ERROR' : 'WARNING'}']`
       );
 
       inspectionCount++;
