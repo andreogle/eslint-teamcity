@@ -49,17 +49,17 @@ module.exports = function(results, teamcityPropNames) {
 
     result.messages.forEach(message => {
       const isError = message.fatal || message.severity === 2;
-      const inspectionId = message.ruleId;
+      const rule = escapeTeamCityString(message.ruleId);
 
       inspectionsList.push(
-        `##teamcity[inspectionType id='${inspectionId}' category='ESLint violations' ` +
-        `name='${inspectionId}' description='ESlint Violations']`
+        `##teamcity[inspectionType id='${rule}' category='ESLint violations' ` +
+        `name='${rule}' description='ESlint Violations']`
       );
 
       const errorMessage = `line ${message.line || 0}, col ${message.column || 0}, ${message.message}`;
 
       inspectionsList.push(
-        `##teamcity[inspection typeId='${inspectionId}' message='${errorMessage}' ` +
+        `##teamcity[inspection typeId='${rule}' message='${errorMessage}' ` +
         `file='${filePath}' line='${message.line || 0}' SEVERITY='${isError ? 'ERROR' : 'WARNING'}']`
       );
 
