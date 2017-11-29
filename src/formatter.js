@@ -50,13 +50,14 @@ module.exports = function(results, teamcityPropNames) {
     result.messages.forEach(message => {
       const isError = message.fatal || message.severity === 2;
       const rule = escapeTeamCityString(message.ruleId);
+      const escapedMessage = escapeTeamCityString(message.message);
 
       inspectionsList.push(
         `##teamcity[inspectionType id='${rule}' category='ESLint violations' ` +
         `name='${rule}' description='ESlint Violations']`
       );
 
-      const errorMessage = `line ${message.line || 0}, col ${message.column || 0}, ${message.message}`;
+      const errorMessage = `line ${message.line || 0}, col ${message.column || 0}, ${escapedMessage}`;
 
       inspectionsList.push(
         `##teamcity[inspection typeId='${rule}' message='${errorMessage}' ` +
