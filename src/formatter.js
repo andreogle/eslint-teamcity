@@ -5,71 +5,43 @@
 
 'use strict';
 
-//------------------------------------------------------------------------------
-// Helpers
-//------------------------------------------------------------------------------
+const utils = require('./utils');
+const errorFormatter = require('./formatters/errors');
+const inspectionFormatter = require('./formatters/inspections');
 
-/**
- * Escape special characters with the respective TeamCity escaping.
- * See below link for list of special characters:
- * https://confluence.jetbrains.com/display/TCD10/Build+Script+Interaction+with+TeamCity
- * @param {string} str An error message to display in TeamCity.
- * @returns {string} An error message formatted for display in TeamCity
- */
-function escapeTeamCityString(str) {
-  if (!str) {
-    return '';
-  }
+function getUserConfig(propNames) {
+  const config = JSON.parse(utils.loadConfig())['eslint-teamcity'] || {};
 
-  return str.replace(/\|/g, '||')
-    .replace(/\'/g, '|\'')
-    .replace(/\n/g, '|n')
-    .replace(/\r/g, '|r')
-    .replace(/\u0085/g, '|x') // TeamCity 6
-    .replace(/\u2028/g, '|l') // TeamCity 6
-    .replace(/\u2029/g, '|p') // TeamCity 6
-    .replace(/\[/g, '|[')
-    .replace(/\]/g, '|]');
+  const showInspections = propNames.inspections || !!config['inspections'] || false;
+  const reportName = propNames.reportName || config['report-name'] || 'ESLint Violations';
+  const inspectionCountName = propNames.inspectionCountName || config['inspection-count-name'] || 'ESLint Inspection Count';
+  const errorCountName = propNames.errorCountName || config['error-count-name'] || 'ESLint Error Count';
+  const warningCountName = propNames.warningCountName || config['warning-count-name'] || 'ESLint Warning Count';
+
+  return {
+    showInspections,
+    reportName: utils.escapeTeamCityString(reportName),
+    inspectionCountName: utils.escapeTeamCityString(inspectionCountName),
+    errorCountName: utils.escapeTeamCityString(errorCountName),
+    warningCountName: utils.escapeTeamCityString(warningCountName),
+  };
 }
 
-//------------------------------------------------------------------------------
-// Public Interface
-//------------------------------------------------------------------------------
-module.exports = function(results, teamcityPropNames) {
-  const varNames = teamcityPropNames || {};
-  const reportName = varNames.reportName || 'ESLint Violations';
-  const inspectionCountName = varNames.errorCountName || 'ESLintInspectionCount';
+module.exports = (results, propNames) => {
+  const config = getUserConfig(propNames);
 
-  const inspectionsList = [];
+  let outputList = [];
+  if (config.showInspections) {
+    const { inspections, inspectionCount } = inspectionFormatter.getInspections(results);
+    outputList = inspections;
+    outputList.push(`##teamcity[buildStatisticValue key='${config.inspectionCountName}' value='${inspectionCount}']`);
+  } else {
+    const { errorsAndWarnings, errorCount, warningCount } = errorFormatter.getErrors(results);
+    outputList = errorsAndWarnings;
+    outputList.push(`##teamcity[buildStatisticValue key='${config.errorCountName}' value='${errorCount}']`);
+    outputList.push(`##teamcity[buildStatisticValue key='${config.warningCountName}' value='${warningCount}']`);
+  }
 
-  let inspectionCount = 0;
-
-  results.forEach(result => {
-    const filePath = escapeTeamCityString(result.filePath);
-
-    result.messages.forEach(message => {
-      const isError = message.fatal || message.severity === 2;
-      const rule = escapeTeamCityString(message.ruleId);
-      const escapedMessage = escapeTeamCityString(message.message);
-
-      inspectionsList.push(
-        `##teamcity[inspectionType id='${rule}' category='ESLint violations' ` +
-        `name='${rule}' description='ESlint Violations']`
-      );
-
-      const errorMessage = `line ${message.line || 0}, col ${message.column || 0}, ${escapedMessage}`;
-
-      inspectionsList.push(
-        `##teamcity[inspection typeId='${rule}' message='${errorMessage}' ` +
-        `file='${filePath}' line='${message.line || 0}' SEVERITY='${isError ? 'ERROR' : 'WARNING'}']`
-      );
-
-      inspectionCount++;
-    });
-  });
-
-  inspectionsList.push(`##teamcity[buildStatisticValue key='${inspectionCountName}' value='${inspectionCount}']`);
-
-  return inspectionsList.join('\n');
+  return outputList.join('\n');
 };
 
