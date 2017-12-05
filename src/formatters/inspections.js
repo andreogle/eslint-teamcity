@@ -1,3 +1,5 @@
+const utils = require('../utils');
+
 module.exports = (results) => {
   const inspectionsList = [];
   let inspectionCount = 0;
@@ -26,5 +28,7 @@ module.exports = (results) => {
     });
   });
 
-  return { inspections: inspectionsList, inspectionCount };
+  inspectionsList.push(`##teamcity[buildStatisticValue key='${config.inspectionCountName}' value='${inspectionCount}']`);
+
+  return inspectionsList;
 }

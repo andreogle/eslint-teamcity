@@ -1,6 +1,4 @@
-var main = {};
-
-main.createDummyError = function() {
+exports.createDummyError = () => {
   return (
     {
       messages: [
@@ -23,7 +21,7 @@ main.createDummyError = function() {
   );
 };
 
-main.createFatalError = function() {
+exports.createFatalError = () => {
   return (
     {
       messages: [
@@ -39,7 +37,7 @@ main.createFatalError = function() {
   );
 };
 
-main.createDummyWarning = function() {
+exports.createDummyWarning = () => {
   return (
     {
       messages: [
@@ -61,4 +59,3 @@ main.createDummyWarning = function() {
   );
 };
 
-module.exports = main;
