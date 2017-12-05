@@ -3,30 +3,15 @@ const sinon = require('sinon');
 const formatErrors = require('../../src/formatters/errors');
 const { createDummyError, createDummyWarning, createFatalError } = require('../helpers/eslint-result-generator');
 
-describe('error formatting', () => {
+describe('inspection formatting', () => {
   const reportConfig = {
     reportName: 'ESLint Violations',
-    errorCountName: 'ESLintErrorCount',
-    warningCountName: 'ESLintWarningCount',
+    inspectionCountName: 'ESLintInspectionCount',
   };
   let results = [];
 
   afterEach(() => {
     results = [];
-  });
-
-  describe('test suite name', () => {
-    it('should include the test suite name header', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testSuiteStarted name=\'ESLint Violations\']'
-      );
-    });
-
-    it('should include the test suite name footer', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testSuiteFinished name=\'ESLint Violations\']'
-      );
-    });
   });
 
   describe('file error output', () => {
@@ -42,7 +27,7 @@ describe('error formatting', () => {
 
     it('should include all errors within their respective file', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testFailed name=\'ESLint Violations: testfile.js\' message=\'line 1, col 1, |\'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)\']'
+        '##teamcity[testFailed name=\'ESLint Violations: testfile.js message=\'line 1, col 1, |\'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)\']'
       );
     });
 
@@ -72,7 +57,7 @@ describe('error formatting', () => {
 
     it('should include all errors within their respective file', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testFailed name=\'ESLint Violations: testfile-fatal.js\' message=\'line 1, col 1, Some fatal error\']'
+        '##teamcity[testFailed name=\'ESLint Violations: testfile-fatal.js message=\'line 1, col 1, Some fatal error\']'
       );
     });
   });

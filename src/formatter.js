@@ -14,14 +14,12 @@ function getUserConfig(propNames) {
 
   const reportType = propNames.inspections || config['reporter'] || 'errors';
   const reportName = propNames.reportName || config['report-name'] || 'ESLint Violations';
-  const inspectionCountName = propNames.inspectionCountName || config['inspection-count-name'] || 'ESLint Inspection Count';
   const errorCountName = propNames.errorCountName || config['error-count-name'] || 'ESLint Error Count';
   const warningCountName = propNames.warningCountName || config['warning-count-name'] || 'ESLint Warning Count';
 
   return {
     reportType,
     reportName: utils.escapeTeamCityString(reportName),
-    inspectionCountName: utils.escapeTeamCityString(inspectionCountName),
     errorCountName: utils.escapeTeamCityString(errorCountName),
     warningCountName: utils.escapeTeamCityString(warningCountName),
   };
