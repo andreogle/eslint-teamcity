@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 
-'use strict';
+const fs = require('fs-extra');
+const formatter = require('./src/formatter');
 
-var fs = require('fs-extra');
-var procArg = process.argv;
-
-if (require.main === module) {
-  process.stdout.write(main(fs.readJSONSync(procArg[2])))
-} else {
-  module.exports = main;
-}
+const procArg = process.argv;
 
 /**
  * main function
  * @param {String} input - input data stringify json
- * @param {Object} [teamcityPropNames] - names of the vars
+ * @param {Object} [teamcityPropNames] - any config variables
  * @returns {String} format result
  */
 function main(input, teamcityPropNames) {
-  return require('./src/formatter')(input, teamcityPropNames);
+  return formatter(input, teamcityPropNames);
+}
+
+if (require.main === module) {
+  process.stdout.write(main(fs.readJSONSync(procArg[2])));
+} else {
+  module.exports = main;
 }

@@ -22,13 +22,14 @@ exports.loadConfig = () => {
  * @param {string} str The raw message to display in TeamCity build log.
  * @returns {string} An error message formatted for display in TeamCity
  */
-exports.escapeTeamCityString = (str) => {
+exports.escapeTeamCityString = str => {
   if (!str) {
     return '';
   }
 
-  return str.replace(/\|/g, '||')
-    .replace(/\'/g, '|\'')
+  return str
+    .replace(/\|/g, '||')
+    .replace(/'/g, "|'")
     .replace(/\n/g, '|n')
     .replace(/\r/g, '|r')
     .replace(/\u0085/g, '|x') // TeamCity 6
@@ -36,5 +37,4 @@ exports.escapeTeamCityString = (str) => {
     .replace(/\u2029/g, '|p') // TeamCity 6
     .replace(/\[/g, '|[')
     .replace(/\]/g, '|]');
-}
-
+};

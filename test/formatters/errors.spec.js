@@ -1,14 +1,20 @@
-const expect = require('chai').expect;
-const sinon = require('sinon');
+/* global it, describe, beforeEach, afterEach */
+
+const { expect } = require('chai');
 const formatErrors = require('../../src/formatters/errors');
-const { createDummyError, createDummyWarning, createFatalError } = require('../helpers/eslint-result-generator');
+const {
+  createDummyError,
+  createDummyWarning,
+  createFatalError
+} = require('../helpers/eslint-result-generator');
 
 describe('error formatting', () => {
   const reportConfig = {
     reportName: 'ESLint Violations',
     errorCountName: 'ESLintErrorCount',
-    warningCountName: 'ESLintWarningCount',
+    warningCountName: 'ESLintWarningCount'
   };
+
   let results = [];
 
   afterEach(() => {
@@ -18,13 +24,13 @@ describe('error formatting', () => {
   describe('test suite name', () => {
     it('should include the test suite name header', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testSuiteStarted name=\'ESLint Violations\']'
+        "##teamcity[testSuiteStarted name='ESLint Violations']"
       );
     });
 
     it('should include the test suite name footer', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testSuiteFinished name=\'ESLint Violations\']'
+        "##teamcity[testSuiteFinished name='ESLint Violations']"
       );
     });
   });
@@ -36,19 +42,19 @@ describe('error formatting', () => {
 
     it('should include filename at the start of each file test', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testStarted name=\'ESLint Violations: testfile.js\']'
+        "##teamcity[testStarted name='ESLint Violations: testfile.js']"
       );
     });
 
     it('should include all errors within their respective file', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testFailed name=\'ESLint Violations: testfile.js\' message=\'line 1, col 1, |\'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)\']'
+        "##teamcity[testFailed name='ESLint Violations: testfile.js' message='line 1, col 1, |'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)']"
       );
     });
 
     it('should include filename at the end of each file test', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testFinished name=\'ESLint Violations: testfile.js\']'
+        "##teamcity[testFinished name='ESLint Violations: testfile.js']"
       );
     });
   });
@@ -60,19 +66,19 @@ describe('error formatting', () => {
 
     it('should include filename at the start of each file test', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testStarted name=\'ESLint Violations: testfile-fatal.js\']'
+        "##teamcity[testStarted name='ESLint Violations: testfile-fatal.js']"
       );
     });
 
     it('should include filename at the end of each file test', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testFinished name=\'ESLint Violations: testfile-fatal.js\']'
+        "##teamcity[testFinished name='ESLint Violations: testfile-fatal.js']"
       );
     });
 
     it('should include all errors within their respective file', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testFailed name=\'ESLint Violations: testfile-fatal.js\' message=\'line 1, col 1, Some fatal error\']'
+        "##teamcity[testFailed name='ESLint Violations: testfile-fatal.js' message='line 1, col 1, Some fatal error']"
       );
     });
   });
@@ -84,19 +90,19 @@ describe('error formatting', () => {
 
     it('should include filename at the start of each file test', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testStarted name=\'ESLint Violations: testfile-warning.js\']'
+        "##teamcity[testStarted name='ESLint Violations: testfile-warning.js']"
       );
     });
 
     it('should include filename at the end of each file test', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testFinished name=\'ESLint Violations: testfile-warning.js\']'
+        "##teamcity[testFinished name='ESLint Violations: testfile-warning.js']"
       );
     });
 
     it('should include all warnings within their respective file', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[testStdOut name=\'ESLint Violations: testfile-warning.js\' out=\'warning: line 1, col 1, Some warning|nline 2, col 2, This is a test warning.\']'
+        "##teamcity[testStdOut name='ESLint Violations: testfile-warning.js' out='warning: line 1, col 1, Some warning|nline 2, col 2, This is a test warning.']"
       );
     });
   });
@@ -109,15 +115,14 @@ describe('error formatting', () => {
 
     it('should contain total warning count', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[buildStatisticValue key=\'ESLintWarningCount\' value=\'2\']'
+        "##teamcity[buildStatisticValue key='ESLintWarningCount' value='2']"
       );
     });
 
     it('should contain total error count', () => {
       expect(formatErrors(results, reportConfig)).to.contain(
-        '##teamcity[buildStatisticValue key=\'ESLintErrorCount\' value=\'2\']'
+        "##teamcity[buildStatisticValue key='ESLintErrorCount' value='2']"
       );
     });
   });
 });
-

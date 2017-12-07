@@ -9,7 +9,7 @@ module.exports = (results, config) => {
   outputList.push(`##teamcity[testSuiteStarted name='${reportName}']`);
 
   results.forEach(result => {
-    const messages = result.messages;
+    const { messages } = result;
 
     if (messages.length === 0) {
       return;
@@ -17,9 +17,7 @@ module.exports = (results, config) => {
 
     const filePath = utils.escapeTeamCityString(result.filePath);
 
-    outputList.push(
-      `##teamcity[testStarted name='${reportName}: ${filePath}']`
-    );
+    outputList.push(`##teamcity[testStarted name='${reportName}: ${filePath}']`);
 
     const errorsList = [];
     const warningsList = [];
@@ -33,14 +31,15 @@ module.exports = (results, config) => {
 
       if (!isError) {
         warningsList.push(formattedMessage);
-        warningCount++;
+        warningCount += 1;
       } else {
         errorsList.push(formattedMessage);
-        errorCount++;
+        errorCount += 1;
       }
     });
 
-    // Display all errors and warnings together (after we've looped through all messages for a given file)
+    // Display all errors and warnings together (after we've looped through all
+    // messages for a given file)
     if (errorsList.length) {
       const errors = utils.escapeTeamCityString(errorsList.join('\n'));
       outputList.push(
@@ -55,15 +54,17 @@ module.exports = (results, config) => {
       );
     }
 
-    outputList.push(
-      `##teamcity[testFinished name='${reportName}: ${filePath}']`
-    );
+    outputList.push(`##teamcity[testFinished name='${reportName}: ${filePath}']`);
   });
 
   outputList.push(`##teamcity[testSuiteFinished name='${reportName}']`);
 
-  outputList.push(`##teamcity[buildStatisticValue key='${config.errorCountName}' value='${errorCount}']`);
-  outputList.push(`##teamcity[buildStatisticValue key='${config.warningCountName}' value='${warningCount}']`);
+  outputList.push(
+    `##teamcity[buildStatisticValue key='${config.errorCountName}' value='${errorCount}']`
+  );
+  outputList.push(
+    `##teamcity[buildStatisticValue key='${config.warningCountName}' value='${warningCount}']`
+  );
 
   return outputList;
-}
+};

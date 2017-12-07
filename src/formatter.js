@@ -3,8 +3,6 @@
  * @author Andre Ogle
  */
 
-'use strict';
-
 const utils = require('./utils');
 const errorFormatter = require('./formatters/errors');
 const inspectionFormatter = require('./formatters/inspections');
@@ -12,16 +10,32 @@ const inspectionFormatter = require('./formatters/inspections');
 function getUserConfig(propNames) {
   const config = JSON.parse(utils.loadConfig())['eslint-teamcity'] || {};
 
-  const reportType = propNames.inspections || config['reporter'] || 'errors';
-  const reportName = propNames.reportName || config['report-name'] || 'ESLint Violations';
-  const errorCountName = propNames.errorCountName || config['error-count-name'] || 'ESLint Error Count';
-  const warningCountName = propNames.warningCountName || config['warning-count-name'] || 'ESLint Warning Count';
+  const reportType =
+    propNames.inspections || config.reporter || process.env.ESLINT_TEAMCITY_REPORTER || 'errors';
+
+  const reportName =
+    propNames.reportName ||
+    config['report-name'] ||
+    process.env.ESLINT_TEAMCITY_REPORT_NAME ||
+    'ESLint Violations';
+
+  const errorCountName =
+    propNames.errorCountName ||
+    config['error-count-name'] ||
+    process.env.ESLINT_TEAMCITY_ERROR_COUNT_NAME ||
+    'ESLint Error Count';
+
+  const warningCountName =
+    propNames.warningCountName ||
+    config['warning-count-name'] ||
+    process.env.ESLINT_TEAMCITY_WARNING_COUNT_NAME ||
+    'ESLint Warning Count';
 
   return {
     reportType,
     reportName: utils.escapeTeamCityString(reportName),
     errorCountName: utils.escapeTeamCityString(errorCountName),
-    warningCountName: utils.escapeTeamCityString(warningCountName),
+    warningCountName: utils.escapeTeamCityString(warningCountName)
   };
 }
 
@@ -45,4 +59,3 @@ function getTeamCityOutput(results, propNames) {
 }
 
 module.exports = getTeamCityOutput;
-
