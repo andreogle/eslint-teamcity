@@ -30,7 +30,7 @@ module.exports = (results, config) => {
       const severityLevel = isError ? 'ERROR' : 'WARNING';
       outputList.push(
         `##teamcity[inspection typeId='${rule}' message='${formattedMessage}' ` +
-          `file='${filePath}' line='${message.line || 0}' SEVERITY='${severityLevel}']`
+          `file='${filePath}' line='${line || 0}' SEVERITY='${severityLevel}']`
       );
 
       if (!isError) {

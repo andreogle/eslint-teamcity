@@ -35,31 +35,7 @@ describe('error formatting', () => {
     });
   });
 
-  describe('file error output', () => {
-    beforeEach(() => {
-      results.push(createDummyError());
-    });
-
-    it('should include filename at the start of each file test', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testStarted name='ESLint Violations: testfile.js']"
-      );
-    });
-
-    it('should include all errors within their respective file', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testFailed name='ESLint Violations: testfile.js' message='line 1, col 1, |'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)']"
-      );
-    });
-
-    it('should include filename at the end of each file test', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testFinished name='ESLint Violations: testfile.js']"
-      );
-    });
-  });
-
-  describe('file fatal error output', () => {
+  describe('fatal error output', () => {
     beforeEach(() => {
       results.push(createFatalError());
     });
@@ -83,7 +59,31 @@ describe('error formatting', () => {
     });
   });
 
-  describe('file warning output', () => {
+  describe('error output', () => {
+    beforeEach(() => {
+      results.push(createDummyError());
+    });
+
+    it('should include filename at the start of each file test', () => {
+      expect(formatErrors(results, reportConfig)).to.contain(
+        "##teamcity[testStarted name='ESLint Violations: testfile.js']"
+      );
+    });
+
+    it('should include all errors within their respective file', () => {
+      expect(formatErrors(results, reportConfig)).to.contain(
+        "##teamcity[testFailed name='ESLint Violations: testfile.js' message='line 1, col 1, |'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)']"
+      );
+    });
+
+    it('should include filename at the end of each file test', () => {
+      expect(formatErrors(results, reportConfig)).to.contain(
+        "##teamcity[testFinished name='ESLint Violations: testfile.js']"
+      );
+    });
+  });
+
+  describe('warning output', () => {
     beforeEach(() => {
       results.push(createDummyWarning());
     });

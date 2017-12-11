@@ -1,7 +1,7 @@
 /* global it, describe, beforeEach, afterEach */
 
 const { expect } = require('chai');
-const formatErrors = require('../../src/formatters/errors');
+const formatInspections = require('../../src/formatters/inspections');
 const {
   createDummyError,
   createDummyWarning,
@@ -11,7 +11,9 @@ const {
 describe('inspection formatting', () => {
   const reportConfig = {
     reportName: 'ESLint Violations',
-    inspectionCountName: 'ESLintInspectionCount'
+    inspectionCountName: 'ESLintInspectionCount',
+    errorCountName: 'ESLintErrorCount',
+    warningCountName: 'ESLintWarningCount'
   };
   let results = [];
 
@@ -19,74 +21,74 @@ describe('inspection formatting', () => {
     results = [];
   });
 
-  describe('file error output', () => {
-    beforeEach(() => {
-      results.push(createDummyError());
-    });
-
-    it('should include filename at the start of each file test', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testStarted name='ESLint Violations: testfile.js']"
-      );
-    });
-
-    it('should include all errors within their respective file', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testFailed name='ESLint Violations: testfile.js message='line 1, col 1, |'|n|r|x|l|p|||[|]|nline 2, col 1, This is a test error. (no-unreachable)']"
-      );
-    });
-
-    it('should include filename at the end of each file test', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testFinished name='ESLint Violations: testfile.js']"
-      );
-    });
-  });
-
-  describe('file fatal error output', () => {
+  describe('fatal error output', () => {
     beforeEach(() => {
       results.push(createFatalError());
     });
 
-    it('should include filename at the start of each file test', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testStarted name='ESLint Violations: testfile-fatal.js']"
+    it('should include the inspection types', () => {
+      const outputList = formatInspections(results, reportConfig);
+      expect(outputList).to.contain(
+        "##teamcity[inspectionType id='no-eval' category='ESLint Violations' name='no-eval' description='ESLint Violations']"
       );
     });
 
-    it('should include filename at the end of each file test', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testFinished name='ESLint Violations: testfile-fatal.js']"
-      );
-    });
-
-    it('should include all errors within their respective file', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testFailed name='ESLint Violations: testfile-fatal.js message='line 1, col 1, Some fatal error']"
+    it('should include the inspections', () => {
+      const outputList = formatInspections(results, reportConfig);
+      expect(outputList).to.contain(
+        "##teamcity[inspection typeId='no-eval' message='line 1, col 1, Some fatal error' file='testfile-fatal.js' line='1' SEVERITY='ERROR']"
       );
     });
   });
 
-  describe('file warning output', () => {
+  describe('error output', () => {
+    beforeEach(() => {
+      results.push(createDummyError());
+    });
+
+    it('should include the inspection types', () => {
+      const outputList = formatInspections(results, reportConfig);
+      expect(outputList).to.contain(
+        "##teamcity[inspectionType id='no-console' category='ESLint Violations' name='no-console' description='ESLint Violations']"
+      );
+      expect(outputList).to.contain(
+        "##teamcity[inspectionType id='no-unreachable' category='ESLint Violations' name='no-unreachable' description='ESLint Violations']"
+      );
+    });
+
+    it('should include the inspections', () => {
+      const outputList = formatInspections(results, reportConfig);
+      expect(outputList).to.contain(
+        "##teamcity[inspection typeId='no-console' message='line 1, col 1, |'|n|r|x|l|p|||[|]' file='testfile.js' line='1' SEVERITY='ERROR']"
+      );
+      expect(outputList).to.contain(
+        "##teamcity[inspection typeId='no-unreachable' message='line 2, col 1, This is a test error.' file='testfile.js' line='2' SEVERITY='ERROR']"
+      );
+    });
+  });
+
+  describe('warning output', () => {
     beforeEach(() => {
       results.push(createDummyWarning());
     });
 
-    it('should include filename at the start of each file test', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testStarted name='ESLint Violations: testfile-warning.js']"
+    it('should include the inspection types', () => {
+      const outputList = formatInspections(results, reportConfig);
+      expect(outputList).to.contain(
+        "##teamcity[inspectionType id='eqeqeq' category='ESLint Violations' name='eqeqeq' description='ESLint Violations']"
+      );
+      expect(outputList).to.contain(
+        "##teamcity[inspectionType id='complexity' category='ESLint Violations' name='complexity' description='ESLint Violations']"
       );
     });
 
-    it('should include filename at the end of each file test', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testFinished name='ESLint Violations: testfile-warning.js']"
+    it('should include the inspections', () => {
+      const outputList = formatInspections(results, reportConfig);
+      expect(outputList).to.contain(
+        "##teamcity[inspection typeId='eqeqeq' message='line 1, col 1, Some warning' file='testfile-warning.js' line='1' SEVERITY='WARNING']"
       );
-    });
-
-    it('should include all warnings within their respective file', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
-        "##teamcity[testStdOut name='ESLint Violations: testfile-warning.js' out='warning: line 1, col 1, Some warning|nline 2, col 2, This is a test warning.']"
+      expect(outputList).to.contain(
+        "##teamcity[inspection typeId='complexity' message='line 2, col 2, This is a test warning.' file='testfile-warning.js' line='2' SEVERITY='WARNING']"
       );
     });
   });
@@ -98,13 +100,13 @@ describe('inspection formatting', () => {
     });
 
     it('should contain total warning count', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
+      expect(formatInspections(results, reportConfig)).to.contain(
         "##teamcity[buildStatisticValue key='ESLintWarningCount' value='2']"
       );
     });
 
     it('should contain total error count', () => {
-      expect(formatErrors(results, reportConfig)).to.contain(
+      expect(formatInspections(results, reportConfig)).to.contain(
         "##teamcity[buildStatisticValue key='ESLintErrorCount' value='2']"
       );
     });

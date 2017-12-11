@@ -38,8 +38,7 @@ module.exports = (results, config) => {
       }
     });
 
-    // Display all errors and warnings together (after we've looped through all
-    // messages for a given file)
+    // Group errors and warnings together per file
     if (errorsList.length) {
       const errors = utils.escapeTeamCityString(errorsList.join('\n'));
       outputList.push(
