@@ -41,6 +41,7 @@ function getUserConfig(propNames) {
 
 function getTeamCityOutput(results, propNames) {
   const config = getUserConfig(propNames || {});
+  console.log(config);
 
   let outputMessages = [];
   switch (config.reportType.toLowerCase()) {
