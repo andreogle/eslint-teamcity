@@ -4,8 +4,8 @@
  */
 
 const utils = require('./utils');
-const errorFormatter = require('./formatters/errors');
-const inspectionFormatter = require('./formatters/inspections');
+const formatErrors = require('./formatters/errors');
+const formatInspections = require('./formatters/inspections');
 
 function getUserConfig(propNames) {
   const config = JSON.parse(utils.loadConfig())['eslint-teamcity'] || {};
@@ -45,12 +45,12 @@ function getTeamCityOutput(results, propNames) {
   let outputMessages = [];
   switch (config.reportType.toLowerCase()) {
     case 'inspections': {
-      outputMessages = inspectionFormatter.getInspections(results);
+      outputMessages = formatInspections(results);
       break;
     }
     case 'errors':
     default: {
-      outputMessages = errorFormatter.getErrors(results, config);
+      outputMessages = formatErrors(results, config);
       break;
     }
   }

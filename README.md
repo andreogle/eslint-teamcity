@@ -75,6 +75,12 @@ eslint-teamcity will also output statistic values which you can use in TeamCity 
 Graphs can be setup from the Builds -> Statistics tab.
 ![Example Statistics Output](http://i.imgur.com/oHbiuZE.png)
 
+## Development
+Get TeamCity up and running quickly with Docker:
+```shell
+docker run -itd -e SERVER_URL="<your ip4 address>:8111" --name teamcity-agent -v <any directory you want to store teamcity config>/teamcity-agent:/data/teamcity_agent/conf jetbrains/teamcity-agent
+```
+
 ## Issues
 
 I will try keep this project up to date, but please log any issues
