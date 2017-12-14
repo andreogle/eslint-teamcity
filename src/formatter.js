@@ -41,12 +41,13 @@ function getUserConfig(propNames) {
 
 function getTeamCityOutput(results, propNames) {
   const config = getUserConfig(propNames || {});
-  console.log(config);
+
+  console.info(`Running ESLint Teamcity with config: ${config}`);
 
   let outputMessages = [];
   switch (config.reportType.toLowerCase()) {
     case 'inspections': {
-      outputMessages = formatInspections(results);
+      outputMessages = formatInspections(results, config);
       break;
     }
     case 'errors':
