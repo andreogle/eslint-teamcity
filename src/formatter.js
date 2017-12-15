@@ -9,7 +9,7 @@ const formatInspections = require('./formatters/inspections');
 
 function getUserConfig(propNames) {
   // Attempt to load package.json from current directory
-  const config = JSON.parse(utils.loadConfig())['eslint-teamcity'] || {};
+  const config = JSON.parse(utils.loadPackageJson())['eslint-teamcity'] || {};
 
   const reportType =
     propNames.reporter || config.reporter || process.env.ESLINT_TEAMCITY_REPORTER || 'errors';

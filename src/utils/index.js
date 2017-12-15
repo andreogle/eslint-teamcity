@@ -4,7 +4,7 @@ const fs = require('fs');
  * Attempt to load package.json within the current directory.
  * @returns {string} The string representation of package.json
  */
-exports.loadConfig = () => {
+exports.loadPackageJson = () => {
   try {
     return fs.readFileSync('package.json');
   } catch (e) {
