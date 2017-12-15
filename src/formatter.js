@@ -8,10 +8,11 @@ const formatErrors = require('./formatters/errors');
 const formatInspections = require('./formatters/inspections');
 
 function getUserConfig(propNames) {
+  // Attempt to load package.json from current directory
   const config = JSON.parse(utils.loadConfig())['eslint-teamcity'] || {};
 
   const reportType =
-    propNames.inspections || config.reporter || process.env.ESLINT_TEAMCITY_REPORTER || 'errors';
+    propNames.reporter || config.reporter || process.env.ESLINT_TEAMCITY_REPORTER || 'errors';
 
   const reportName =
     propNames.reportName ||
