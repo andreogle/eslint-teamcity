@@ -11,7 +11,7 @@ function getUserConfig(propNames) {
   // Attempt to load package.json from current directory
   const config = JSON.parse(utils.loadPackageJson())['eslint-teamcity'] || {};
 
-  const reportType =
+  const reporter =
     propNames.reporter || config.reporter || process.env.ESLINT_TEAMCITY_REPORTER || 'errors';
 
   const reportName =
@@ -33,7 +33,7 @@ function getUserConfig(propNames) {
     'ESLint Warning Count';
 
   return {
-    reportType,
+    reporter,
     reportName: utils.escapeTeamCityString(reportName),
     errorCountName: utils.escapeTeamCityString(errorCountName),
     warningCountName: utils.escapeTeamCityString(warningCountName)
@@ -43,10 +43,12 @@ function getUserConfig(propNames) {
 function getTeamCityOutput(results, propNames) {
   const config = getUserConfig(propNames || {});
 
-  console.info(`Running ESLint Teamcity with config: ${config}`);
+  if (process.env.ESLINT_TEAMCITY_DISPLAY_CONFIG) {
+    console.info(`Running ESLint Teamcity with config: ${JSON.stringify(config)}`);
+  }
 
   let outputMessages = [];
-  switch (config.reportType.toLowerCase()) {
+  switch (config.reporter.toLowerCase()) {
     case 'inspections': {
       outputMessages = formatInspections(results, config);
       break;

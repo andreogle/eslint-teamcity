@@ -34,9 +34,9 @@ module.exports = (results, config) => {
       );
 
       if (!isError) {
-        errorCount += 1;
-      } else {
         warningCount += 1;
+      } else {
+        errorCount += 1;
       }
     });
   });
