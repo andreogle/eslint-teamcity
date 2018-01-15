@@ -7,8 +7,8 @@
     "lint": "./node_modules/.bin/eslint .",
     "precommit": "lint-staged",
     "prettier": "./node_modules/.bin/prettier --write",
-    "test": "./node_modules/mocha/bin/mocha ./test/**/*.spec.js",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/**/*.spec.js"
+    "test": "./node_modules/mocha/bin/mocha \"./test/**/*.spec.js\"",
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec \"./test/**/*.spec.js\""
   },
   "repository": {
     "type": "git",
@@ -26,21 +26,21 @@
     "url": "https://github.com/andreogle/eslint-teamcity/issues"
   },
   "dependencies": {
-    "fs-extra": "^3.0.1"
+    "fs-extra": "^5.0.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "coveralls": "^2.13.3",
+    "chai": "^4.1.0",
+    "coveralls": "^3.0.0",
     "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "^0.14.3",
     "istanbul": "^0.4.5",
     "lint-staged": "^6.0.0",
-    "mocha": "^3.5.3",
+    "mocha": "^4.1.0",
     "prettier": "^1.9.1",
-    "shelljs": "^0.7.8",
-    "sinon": "^2.4.1"
+    "shelljs": "^0.8.0",
+    "sinon": "^4.1.5"
   },
   "lint-staged": {
     "*.js": [
