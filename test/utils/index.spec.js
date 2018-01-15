@@ -8,10 +8,9 @@ const utils = require('../../src/utils');
 describe('loadPackageJson', () => {
   context('success', () => {
     it('returns a string representation of package.json', () => {
-      const packageJson = 'package.json contents';
-      sinon.stub(utils, 'loadPackageJson').callsFake(() => packageJson);
+      sinon.stub(fs, 'readFileSync').callsFake(() => 'package.json contents');
       expect(utils.loadPackageJson()).to.eql('package.json contents');
-      utils.loadPackageJson.restore();
+      fs.readFileSync.restore();
     });
   });
 

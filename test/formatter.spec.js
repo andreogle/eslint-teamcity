@@ -92,7 +92,7 @@ describe('config', () => {
   });
 
   context('process.env', () => {
-    afterEach(() => {
+    beforeEach(() => {
       delete process.env.ESLINT_TEAMCITY_REPORTER;
       delete process.env.ESLINT_TEAMCITY_REPORT_NAME;
       delete process.env.ESLINT_TEAMCITY_ERROR_COUNT_NAME;
