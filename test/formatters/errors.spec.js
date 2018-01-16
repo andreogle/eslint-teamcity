@@ -6,13 +6,13 @@ const {
   createDummyError,
   createDummyWarning,
   createFatalError
-} = require('../helpers/eslint-result-generator');
+} = require('../helpers/eslint-factory');
 
 describe('error formatting', () => {
   const reportConfig = {
     reportName: 'ESLint Violations',
-    errorCountName: 'ESLintErrorCount',
-    warningCountName: 'ESLintWarningCount'
+    errorStatisticsName: 'ESLintErrorCount',
+    warningStatisticsName: 'ESLintWarningCount'
   };
 
   let results = [];
