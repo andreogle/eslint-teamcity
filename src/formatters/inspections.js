@@ -23,20 +23,20 @@ module.exports = (results, config) => {
 
     messages.forEach(messageObj => {
       const { line, column, message, ruleId, fatal, severity } = messageObj;
-      const rule = utils.escapeTeamCityString(ruleId);
       const isError = fatal || severity === 2;
 
       const escapedMessage = utils.escapeTeamCityString(message);
-      const formattedMessage = `line ${line || 0}, col ${column || 0}, ${escapedMessage}`;
+      const escapedRule = utils.escapeTeamCityString(ruleId);
+      const formattedMessage = `line ${line}, col ${column}, ${escapedMessage}`;
 
       outputList.push(
-        `##teamcity[inspectionType id='${rule}' category='${reportName}' name='${rule}' description='${reportName}']`
+        `##teamcity[inspectionType id='${escapedRule}' category='${reportName}' name='${escapedRule}' description='${reportName}']`
       );
 
       const severityLevel = isError ? 'ERROR' : 'WARNING';
       outputList.push(
-        `##teamcity[inspection typeId='${rule}' message='${formattedMessage}' ` +
-          `file='${filePath}' line='${line || 0}' SEVERITY='${severityLevel}']`
+        `##teamcity[inspection typeId='${escapedRule}' message='${formattedMessage}' ` +
+          `file='${filePath}' line='${line}' SEVERITY='${severityLevel}']`
       );
 
       if (!isError) {

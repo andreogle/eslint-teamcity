@@ -30,10 +30,11 @@ module.exports = (results, config) => {
 
     messages.forEach(messageObj => {
       const { line, column, message, ruleId, fatal, severity } = messageObj;
-      const rule = utils.escapeTeamCityString(ruleId);
       const isError = fatal || severity === 2;
 
-      const formattedMessage = `line ${line}, col ${column}, ${message}${rule ? ` (${rule})` : ''}`;
+      const escapedRule = utils.escapeTeamCityString(ruleId);
+      const escapedMessage = utils.escapeTeamCityString(message);
+      const formattedMessage = `line ${line}, col ${column}, ${escapedMessage} (${escapedRule})`;
 
       if (!isError) {
         warningsList.push(formattedMessage);
@@ -46,14 +47,14 @@ module.exports = (results, config) => {
 
     // Group errors and warnings together per file
     if (errorsList.length) {
-      const errors = utils.escapeTeamCityString(errorsList.join('\n'));
+      const errors = errorsList.join('\n');
       outputList.push(
         `##teamcity[testFailed name='${reportName}: ${filePath}' message='${errors}']`
       );
     }
 
     if (warningsList.length) {
-      const warnings = utils.escapeTeamCityString(warningsList.join('\n'));
+      const warnings = warningsList.join('\n');
       outputList.push(
         `##teamcity[testStdOut name='${reportName}: ${filePath}' out='warning: ${warnings}']`
       );
