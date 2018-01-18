@@ -49,7 +49,7 @@ Errors (default)             |  Inspections
 :-------------------------:|:-------------------------:
 ![Example Errors Report](https://i.imgur.com/3AzQeMy.png)  |  ![Example Inspections Report](https://i.imgur.com/JXzBuaV.png)
 
-There are several ways that you can configure eslint-teamcity. You don't have to configure anything by default, you just have the option to if you would like.
+There are several ways that you can configure eslint-teamcity. **You don't have to configure anything by default**, you just have the option to if you would like.
 Settings are looked for in the following priority:
 
 ##### 1. As a second argument
