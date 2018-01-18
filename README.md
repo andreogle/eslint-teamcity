@@ -82,8 +82,8 @@ If you have a package.json file in the **current directory**, you can add an ext
 ```bash
 export ESLINT_TEAMCITY_REPORTER=inspections
 export ESLINT_TEAMCITY_REPORT_NAME="My Formatting Problems"
-export ESLINT_TEAMCITY_ERROR_COUNT_NAME="My Error Count"
-export ESLINT_TEAMCITY_WARNING_COUNT_NAME="My Warning Count"
+export ESLINT_TEAMCITY_ERROR_STATISTICS_NAME="My Error Count"
+export ESLINT_TEAMCITY_WARNING_STATISTICS_NAME="My Warning Count"
 ```
 
 You can also output your current settings to the log if you set:
