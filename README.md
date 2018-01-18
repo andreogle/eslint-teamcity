@@ -110,7 +110,7 @@ more info on setting up a linting task.
 
 
 ## TeamCity Usage
-The simplest way to run eslint-teamcity is from npm script in a build step. You could setup a script similar to this:
+The simplest way to run eslint-teamcity is from an npm script in a build step. You could setup a script similar to this:
 ```json
 "scripts": {
   "lint:teamcity": "node node_modules/.bin/eslint app/src -f './node_modules/eslint-teamcity/index.js'"
