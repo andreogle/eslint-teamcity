@@ -1,52 +1,61 @@
-var expect = require('chai').expect;
-var sinon = require('sinon');
-var sh = require('shelljs');
-var path = require('path');
-var fs = require('fs-extra');
-var basePath = path.resolve(__dirname, '..');
-var eslintResultGenerator = require('./helpers/eslint-result-generator');
-var pathToTestJson = path.resolve(__dirname, 'result.json');
-var pathToIndex = path.resolve(__dirname, '..', 'index.js');
+/* global it, describe, beforeEach, afterEach */
 
-var input = [];
-var result;
-describe('support interface',function() {
-  before(function() {
-    input.push(eslintResultGenerator.createDummyError());
-  });
+const { expect } = require('chai');
+const sh = require('shelljs');
+const path = require('path');
+const fs = require('fs-extra');
+const { createDummyError } = require('./helpers/eslint-factory');
 
-  describe('cmd',function() {
-    it('as eslint formatter plugin', function() {
-      result = sh.exec('eslint --format ' + '\'' + pathToIndex + '\' ' + pathToIndex);
-      expect(result.stdout).to.contain('##teamcity');
+const basePath = path.resolve(__dirname, '..');
+const pathToTestJson = path.resolve(__dirname, 'result.json');
+const pathToIndex = path.resolve(__dirname, '..', 'index.js');
+
+describe('smoke tests', function() {
+  describe('support interface', function() {
+    let esLintOutput = [];
+
+    beforeEach(function() {
+      esLintOutput.push(createDummyError());
     });
 
-    it('as standalone',function() {
-      fs.writeJSONSync(pathToTestJson, input);
-      result = sh.exec('cd ' + basePath + '; node ' + 'index.js ' + pathToTestJson);
-      expect(result.stdout).to.contain('##teamcity');
-      expect(result.stderr).to.equal('');
-
-      sh.rm(pathToTestJson);
-    });
-  });
-
-  describe('requirejs',function() {
-    it('basic', function() {
-      result = require(pathToIndex)(input);
-      expect(result).to.contain('##teamcity');
+    afterEach(function() {
+      esLintOutput = [];
     });
 
-    it('with parameters', function() {
-      var teamcityPropNames = {
-        errorCountName: 'EslintInspectionStatsE',
-        warningCountName: 'EslintInspectionStatsW'
-      };
+    describe('cmd', function() {
+      it('as eslint formatter plugin', function() {
+        this.timeout(8000);
+        const result = sh.exec(`eslint --format '${pathToIndex}' ${pathToIndex}`);
+        expect(result.stdout).to.contain('##teamcity');
+      });
 
-      result = require(pathToIndex)(input, teamcityPropNames);
-      expect(result).to.contain('ESLint Violations');
-      expect(result).to.contain('EslintInspectionStatsE');
-      expect(result).to.contain('EslintInspectionStatsW');
+      it('as standalone', function() {
+        fs.writeJSONSync(pathToTestJson, esLintOutput);
+        const result = sh.exec(`cd ${basePath}; node index.js ${pathToTestJson}`);
+        expect(result.stdout).to.contain('##teamcity');
+        expect(result.stderr).to.equal('');
+
+        sh.rm(pathToTestJson);
+      });
+    });
+
+    describe('requirejs', function() {
+      it('basic', function() {
+        const result = require(pathToIndex)(esLintOutput);
+        expect(result).to.contain('##teamcity');
+      });
+
+      it('with parameters', function() {
+        const teamcityPropNames = {
+          errorStatisticsName: 'EslintInspectionStatsE',
+          warningStatisticsName: 'EslintInspectionStatsW'
+        };
+
+        const result = require(pathToIndex)(esLintOutput, teamcityPropNames);
+        expect(result).to.contain('ESLint Violations');
+        expect(result).to.contain('EslintInspectionStatsE');
+        expect(result).to.contain('EslintInspectionStatsW');
+      });
     });
   });
 });
