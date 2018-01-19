@@ -23,9 +23,15 @@ describe('smoke tests', () => {
     });
 
     describe('cmd', () => {
-      it('as eslint formatter plugin', () => {
-        const result = sh.exec(`eslint --format '${pathToIndex}' ${pathToIndex}`);
-        expect(result.stdout).to.contain('##teamcity');
+      it('as eslint formatter plugin', done => {
+        new Promise(resolve => {
+          const result = sh.exec(`eslint --format '${pathToIndex}' ${pathToIndex}`);
+          resolve(result.stdout);
+        })
+          .then(result => {
+            expect(result).to.contain('##teamcity');
+          })
+          .then(done, done);
       });
 
       it('as standalone', () => {
