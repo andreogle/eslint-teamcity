@@ -10,28 +10,26 @@ const basePath = path.resolve(__dirname, '..');
 const pathToTestJson = path.resolve(__dirname, 'result.json');
 const pathToIndex = path.resolve(__dirname, '..', 'index.js');
 
-describe('smoke tests', () => {
-  describe('support interface', () => {
+describe('smoke tests', function() {
+  describe('support interface', function() {
     let esLintOutput = [];
 
-    beforeEach(() => {
+    beforeEach(function() {
       esLintOutput.push(createDummyError());
     });
 
-    afterEach(() => {
+    afterEach(function() {
       esLintOutput = [];
     });
 
-    describe('cmd', () => {
-      it('as eslint formatter plugin', () => {
-        return new Promise(resolve => {
-          resolve(sh.exec(`eslint --format '${pathToIndex}' ${pathToIndex}`));
-        }).then(result => {
-          expect(result.stdout).to.contain('##teamcity');
-        });
+    describe('cmd', function() {
+      it('as eslint formatter plugin', function() {
+        this.timeout(8000);
+        const result = sh.exec(`eslint --format '${pathToIndex}' ${pathToIndex}`);
+        expect(result.stdout).to.contain('##teamcity');
       });
 
-      it('as standalone', () => {
+      it('as standalone', function() {
         fs.writeJSONSync(pathToTestJson, esLintOutput);
         const result = sh.exec(`cd ${basePath}; node index.js ${pathToTestJson}`);
         expect(result.stdout).to.contain('##teamcity');
@@ -41,13 +39,13 @@ describe('smoke tests', () => {
       });
     });
 
-    describe('requirejs', () => {
-      it('basic', () => {
+    describe('requirejs', function() {
+      it('basic', function() {
         const result = require(pathToIndex)(esLintOutput);
         expect(result).to.contain('##teamcity');
       });
 
-      it('with parameters', () => {
+      it('with parameters', function() {
         const teamcityPropNames = {
           errorStatisticsName: 'EslintInspectionStatsE',
           warningStatisticsName: 'EslintInspectionStatsW'

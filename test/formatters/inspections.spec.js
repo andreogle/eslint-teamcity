@@ -8,7 +8,7 @@ const {
   createFatalError
 } = require('../helpers/eslint-factory');
 
-describe('inspection formatting', () => {
+describe('inspection formatting', function() {
   const reportConfig = {
     reportName: 'ESLint Violations',
     inspectionCountName: 'ESLintInspectionCount',
@@ -17,23 +17,23 @@ describe('inspection formatting', () => {
   };
   let results = [];
 
-  afterEach(() => {
+  afterEach(function() {
     results = [];
   });
 
-  describe('fatal error output', () => {
-    beforeEach(() => {
+  describe('fatal error output', function() {
+    beforeEach(function() {
       results.push(createFatalError());
     });
 
-    it('should include the inspection types', () => {
+    it('should include the inspection types', function() {
       const outputList = formatInspections(results, reportConfig);
       expect(outputList[0]).to.eql(
         "##teamcity[inspectionType id='no-eval' category='ESLint Violations' name='no-eval' description='ESLint Violations']"
       );
     });
 
-    it('should include the inspections', () => {
+    it('should include the inspections', function() {
       const outputList = formatInspections(results, reportConfig);
       expect(outputList[1]).to.contain(
         "##teamcity[inspection typeId='no-eval' message='line 1, col 1, Some fatal error' file='testfile-fatal.js' line='1' SEVERITY='ERROR']"
@@ -41,12 +41,12 @@ describe('inspection formatting', () => {
     });
   });
 
-  describe('error output', () => {
-    beforeEach(() => {
+  describe('error output', function() {
+    beforeEach(function() {
       results.push(createDummyError());
     });
 
-    it('should include the inspection types', () => {
+    it('should include the inspection types', function() {
       const outputList = formatInspections(results, reportConfig);
       expect(outputList[0]).to.eql(
         "##teamcity[inspectionType id='no-console' category='ESLint Violations' name='no-console' description='ESLint Violations']"
@@ -56,7 +56,7 @@ describe('inspection formatting', () => {
       );
     });
 
-    it('should include the inspections', () => {
+    it('should include the inspections', function() {
       const outputList = formatInspections(results, reportConfig);
       expect(outputList[1]).to.eql(
         "##teamcity[inspection typeId='no-console' message='line 1, col 1, |'|n|r|x|l|p|||[|]' file='testfile.js' line='1' SEVERITY='ERROR']"
@@ -67,12 +67,12 @@ describe('inspection formatting', () => {
     });
   });
 
-  describe('warning output', () => {
-    beforeEach(() => {
+  describe('warning output', function() {
+    beforeEach(function() {
       results.push(createDummyWarning());
     });
 
-    it('should include the inspection types', () => {
+    it('should include the inspection types', function() {
       const outputList = formatInspections(results, reportConfig);
       expect(outputList[0]).to.eql(
         "##teamcity[inspectionType id='eqeqeq' category='ESLint Violations' name='eqeqeq' description='ESLint Violations']"
@@ -82,7 +82,7 @@ describe('inspection formatting', () => {
       );
     });
 
-    it('should include the inspections', () => {
+    it('should include the inspections', function() {
       const outputList = formatInspections(results, reportConfig);
       expect(outputList[1]).to.eql(
         "##teamcity[inspection typeId='eqeqeq' message='line 1, col 1, Some warning' file='testfile-warning.js' line='1' SEVERITY='WARNING']"
@@ -93,20 +93,20 @@ describe('inspection formatting', () => {
     });
   });
 
-  describe('build statistics', () => {
-    beforeEach(() => {
+  describe('build statistics', function() {
+    beforeEach(function() {
       results.push(createDummyWarning());
       results.push(createDummyError());
     });
 
-    it('should contain total error count', () => {
+    it('should contain total error count', function() {
       const outputList = formatInspections(results, reportConfig);
       expect(outputList[8]).to.eql(
         "##teamcity[buildStatisticValue key='ESLintErrorCount' value='2']"
       );
     });
 
-    it('should contain total warning count', () => {
+    it('should contain total warning count', function() {
       const outputList = formatInspections(results, reportConfig);
       expect(outputList[9]).to.eql(
         "##teamcity[buildStatisticValue key='ESLintWarningCount' value='2']"
