@@ -13,7 +13,7 @@ TeamCity 9.1.x/10.0.x/2017 and ESLint 1/2/3/4.
 
 **As of v2.0, Node v6+ is required. If you use an older version of Node, please stick with v1.x**
 
-Prerequisite: You must have either [npm](https://docs.npmjs.com/cli/install) or [Yarn](https://yarnpkg.com/en/docs/install) installed.
+Prerequisite: You must have either [npm](https://docs.npmjs.com/getting-started/installing-node#install-npm--manage-npm-versions) or [Yarn](https://yarnpkg.com/en/docs/install) installed.
 
 ```sh
 npm install eslint-teamcity --save-dev
