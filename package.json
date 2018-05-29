@@ -1,6 +1,6 @@
 {
   "name": "eslint-teamcity",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An ESLint formatter plugin for TeamCity",
   "main": "index.js",
   "scripts": {
