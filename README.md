@@ -113,7 +113,7 @@ more info on setting up a linting task.
 The simplest way to run eslint-teamcity is from an npm script in a build step. You could setup a script similar to this:
 ```json
 "scripts": {
-  "lint:teamcity": "node node_modules/.bin/eslint app/src -f './node_modules/eslint-teamcity/index.js'"
+  "lint:teamcity": "eslint app/src --format './node_modules/eslint-teamcity/index.js'"
 }
 ```
 
