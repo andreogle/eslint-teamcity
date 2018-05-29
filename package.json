@@ -4,11 +4,11 @@
   "description": "An ESLint formatter plugin for TeamCity",
   "main": "index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint .",
+    "lint": "eslint .",
     "precommit": "lint-staged",
-    "prettier": "./node_modules/.bin/prettier --write",
-    "test": "./node_modules/mocha/bin/mocha \"./test/**/*.spec.js\"",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec \"./test/**/*.spec.js\""
+    "prettier": "prettier --write",
+    "test": "mocha \"./test/**/*.spec.js\"",
+    "test-travis": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec \"./test/**/*.spec.js\""
   },
   "repository": {
     "type": "git",
