@@ -1,3 +1,4 @@
+const path = require('path');
 const utils = require('../utils');
 
 /**
@@ -21,7 +22,7 @@ module.exports = (results, config) => {
       return;
     }
 
-    const filePath = utils.escapeTeamCityString(result.filePath);
+    const filePath = utils.escapeTeamCityString(path.relative(process.cwd(), result.filePath));
 
     outputList.push(`##teamcity[testStarted name='${reportName}: ${filePath}']`);
 
