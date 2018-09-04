@@ -1,6 +1,6 @@
 {
   "name": "eslint-teamcity",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "An ESLint formatter plugin for TeamCity",
   "main": "index.js",
   "scripts": {
@@ -30,15 +30,15 @@
   },
   "devDependencies": {
     "chai": "^4.1.0",
-    "coveralls": "^3.0.1",
+    "coveralls": "^3.0.2",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-import": "^2.14.0",
     "husky": "^0.14.3",
     "istanbul": "^0.4.5",
     "lint-staged": "^6.1.1",
     "mocha": "^4.1.0",
-    "prettier": "^1.13.2",
+    "prettier": "^1.14.2",
     "shelljs": "^0.8.2",
     "sinon": "^4.5.0"
   },
