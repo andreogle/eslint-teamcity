@@ -7,7 +7,7 @@
 > A small [eslint](https://github.com/eslint/eslint) formatter plugin.
 ESLint violations are output nicely in the
 [TeamCity](https://www.jetbrains.com/teamcity/) build error format. Tested with
-TeamCity 9.1.x/10.0.x/2017 and ESLint 1/2/3/4.
+TeamCity 9.1.x/10.0.x/2017 and ESLint 1+
 
 ## Installation
 
