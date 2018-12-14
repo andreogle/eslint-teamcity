@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "precommit": "lint-staged",
     "prettier": "prettier --write ./**/*.js",
     "test": "mocha \"./test/**/*.spec.js\"",
-    "test-travis": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec \"./test/**/*.spec.js\""
+    "test:travis": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec \"./test/**/*.spec.js\""
   },
   "repository": {
     "type": "git",
@@ -48,5 +47,10 @@
       "npm run lint",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
