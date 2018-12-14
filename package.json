@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "prettier": "prettier --write",
+    "prettier": "prettier --write ./**/*.js",
     "test": "mocha \"./test/**/*.spec.js\"",
     "test-travis": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec \"./test/**/*.spec.js\""
   },
@@ -29,18 +29,18 @@
     "fs-extra": "^5.0.0"
   },
   "devDependencies": {
-    "chai": "^4.1.0",
+    "chai": "^4.2.0",
     "coveralls": "^3.0.2",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint": "^5.10.x",
+    "eslint-config-airbnb-base": "^13.1.x",
     "eslint-plugin-import": "^2.14.0",
-    "husky": "^0.14.3",
+    "husky": "^1.2.x",
     "istanbul": "^0.4.5",
-    "lint-staged": "^6.1.1",
-    "mocha": "^4.1.0",
-    "prettier": "^1.14.2",
-    "shelljs": "^0.8.2",
-    "sinon": "^4.5.0"
+    "lint-staged": "^8.1.x",
+    "mocha": "^5.2.x",
+    "prettier": "^1.15.3",
+    "shelljs": "^0.8.3",
+    "sinon": "^7.2.x"
   },
   "lint-staged": {
     "*.js": [

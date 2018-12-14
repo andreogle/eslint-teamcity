@@ -12,6 +12,7 @@
     "global-require": 0,
     "no-console": [1, { "allow": ["info", "warn", "error"] }],
     "object-curly-newline": 0,
+    "operator-linebreak": 0,
     "prefer-arrow-callback": 0,
     "space-before-function-paren": 0,
 
