@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "prettier": "prettier --write ./**/*.js",
     "test": "mocha \"./test/**/*.spec.js\"",
-    "test:travis": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec \"./test/**/*.spec.js\""
+    "test:travis": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -34,12 +34,12 @@
     "eslint-config-airbnb-base": "^13.1.x",
     "eslint-plugin-import": "^2.16.0",
     "husky": "^1.3.x",
-    "istanbul": "^0.4.5",
-    "lint-staged": "^8.1.4",
+    "lint-staged": "^8.1.x",
     "mocha": "^5.2.x",
+    "nyc": "^13.3.0",
     "prettier": "^1.16.x",
     "shelljs": "^0.8.3",
-    "sinon": "^7.2.3"
+    "sinon": "^7.2.x"
   },
   "lint-staged": {
     "*.js": [
