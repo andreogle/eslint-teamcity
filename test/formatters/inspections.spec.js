@@ -67,6 +67,20 @@ describe('inspection formatting', function() {
     });
   });
 
+  describe('output with directory paths', function() {
+    beforeEach(function() {
+      results.push({ ...createFatalError(), filePath: 'path\\with\\backslash\\file.js' });
+    });
+
+    it('should render slashes in the service messages', function() {
+      const outputList = formatInspections(results, reportConfig);
+
+      expect(outputList[1]).to.eql(
+        "##teamcity[inspection typeId='no-eval' message='line 1, col 1, Some fatal error' file='path/with/backslash/file.js' line='1' SEVERITY='ERROR']"
+      );
+    });
+  });
+
   describe('warning output', function() {
     beforeEach(function() {
       results.push(createDummyWarning());
