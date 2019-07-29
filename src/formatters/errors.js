@@ -22,7 +22,8 @@ module.exports = (results, config) => {
       return;
     }
 
-    const filePath = utils.escapeTeamCityString(path.relative(process.cwd(), result.filePath));
+    const relativeFilePath = path.relative(process.cwd(), result.filePath);
+    const filePath = utils.escapeTeamCityString(relativeFilePath.replace(/\\/g, '/')); // Ensure slashes on Windows
 
     outputList.push(`##teamcity[testStarted name='${reportName}: ${filePath}']`);
 

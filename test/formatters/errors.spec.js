@@ -83,6 +83,23 @@ describe('error formatting', function() {
     });
   });
 
+  describe('output with directory paths', function() {
+    beforeEach(function() {
+      results.push({ ...createFatalError(), filePath: 'path\\with\\backslash\\file.js' });
+    });
+
+    it('should render slashes in the service messages', function() {
+      const outputList = formatErrors(results, reportConfig);
+
+      expect(outputList[1]).to.eql(
+        "##teamcity[testStarted name='ESLint Violations: path/with/backslash/file.js']"
+      );
+      expect(outputList[2]).to.eql(
+        "##teamcity[testFailed name='ESLint Violations: path/with/backslash/file.js' message='line 1, col 1, Some fatal error (no-eval)']"
+      );
+    });
+  });
+
   describe('warning output', function() {
     beforeEach(function() {
       results.push(createDummyWarning());
