@@ -31,7 +31,7 @@
     "chai": "^4.2.x",
     "coveralls": "^3.0.5",
     "eslint": "^6.0.x",
-    "eslint-config-airbnb-base": "^13.2.x",
+    "eslint-config-airbnb-base": "^14.0.x",
     "eslint-plugin-import": "^2.18.x",
     "husky": "^3.0.x",
     "lint-staged": "^9.2.x",
