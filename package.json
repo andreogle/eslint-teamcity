@@ -33,7 +33,7 @@
     "eslint": "^6.0.x",
     "eslint-config-airbnb-base": "^14.0.x",
     "eslint-plugin-import": "^2.18.x",
-    "husky": "^3.0.x",
+    "husky": "^4.2.x",
     "lint-staged": "^9.2.x",
     "mocha": "^7.0.x",
     "nyc": "^15.0.x",
