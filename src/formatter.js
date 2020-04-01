@@ -41,7 +41,7 @@ function getUserConfig(propNames) {
     reporter,
     reportName: utils.escapeTeamCityString(reportName),
     errorStatisticsName: utils.escapeTeamCityString(errorStatisticsName),
-    warningStatisticsName: utils.escapeTeamCityString(warningStatisticsName)
+    warningStatisticsName: utils.escapeTeamCityString(warningStatisticsName),
   };
 }
 
