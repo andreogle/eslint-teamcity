@@ -11,7 +11,7 @@ TeamCity 9.1.x/10.0.x/2017 and ESLint 1+
 
 ## Installation
 
-**As of v2.0, Node v10+ is required. If you use an older version of Node, please stick with v1.x**
+**As of v2.0, Node v8+ is required. If you use an older version of Node, please stick with v1.x**
 
 Prerequisite: You must have either [npm](https://docs.npmjs.com/getting-started/installing-node#install-npm--manage-npm-versions) or [Yarn](https://yarnpkg.com/en/docs/install) installed.
 
