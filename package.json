@@ -37,7 +37,7 @@
     "lint-staged": "^10.0.x",
     "mocha": "^7.1.1",
     "nyc": "^15.0.x",
-    "prettier": "^1.18.x",
+    "prettier": "^2.0.x",
     "shelljs": "^0.8.3",
     "sinon": "^9.0.1"
   },
