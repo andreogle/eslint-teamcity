@@ -1,10 +1,8 @@
-/* global it, describe, beforeEach, afterEach */
-
 const { expect } = require('chai');
 const sh = require('shelljs');
 const path = require('path');
 const fs = require('fs-extra');
-const { createDummyError } = require('./helpers/eslint-factory');
+const { error } = require('./helpers/eslint-factory');
 
 const basePath = path.resolve(__dirname, '..');
 const pathToTestJson = path.resolve(__dirname, 'result.json');
@@ -15,7 +13,7 @@ describe('smoke tests', function () {
     let esLintOutput = [];
 
     beforeEach(function () {
-      esLintOutput.push(createDummyError());
+      esLintOutput.push(error);
     });
 
     afterEach(function () {

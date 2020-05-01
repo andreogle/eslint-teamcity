@@ -22,7 +22,7 @@ exports.loadPackageJson = () => {
  * @param {string} str The raw message to display in TeamCity build log.
  * @returns {string} An error message formatted for display in TeamCity
  */
-exports.escapeTeamCityString = str => {
+exports.escapeTeamCityString = (str) => {
   if (!str) {
     return '';
   }
