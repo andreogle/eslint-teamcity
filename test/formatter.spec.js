@@ -1,8 +1,6 @@
-/* global it, context, describe, beforeEach, afterEach */
-
 const sinon = require('sinon');
 const { expect } = require('chai');
-const { createDummyError } = require('./helpers/eslint-factory');
+const { error } = require('./helpers/eslint-factory');
 const utils = require('../src/utils/index');
 const format = require('../src/formatter');
 
@@ -11,7 +9,7 @@ describe('formatter', function () {
     let eslintInput = [];
 
     beforeEach(function () {
-      eslintInput.push(createDummyError());
+      eslintInput.push(error);
     });
 
     afterEach(function () {

@@ -13,7 +13,7 @@ module.exports = (results, config) => {
   let errorCount = 0;
   let warningCount = 0;
 
-  results.forEach(result => {
+  results.forEach((result) => {
     const { messages } = result;
 
     if (messages.length === 0) {
@@ -23,21 +23,21 @@ module.exports = (results, config) => {
     const relativeFilePath = path.relative(process.cwd(), result.filePath);
     const filePath = utils.escapeTeamCityString(relativeFilePath.replace(/\\/g, '/')); // Ensure slashes on Windows
 
-    messages.forEach(messageObj => {
+    messages.forEach((messageObj) => {
       const { line, column, message, ruleId, fatal, severity } = messageObj;
       const isError = fatal || severity === 2;
 
+      const escapedRuleId = utils.escapeTeamCityString(ruleId || '<none>');
       const escapedMessage = utils.escapeTeamCityString(message);
-      const escapedRule = utils.escapeTeamCityString(ruleId);
       const formattedMessage = `line ${line}, col ${column}, ${escapedMessage}`;
 
       outputList.push(
-        `##teamcity[inspectionType id='${escapedRule}' category='${reportName}' name='${escapedRule}' description='${reportName}']`
+        `##teamcity[inspectionType id='${escapedRuleId}' category='${reportName}' name='${escapedRuleId}' description='${reportName}']`
       );
 
       const severityLevel = isError ? 'ERROR' : 'WARNING';
       outputList.push(
-        `##teamcity[inspection typeId='${escapedRule}' message='${formattedMessage}' ` +
+        `##teamcity[inspection typeId='${escapedRuleId}' message='${formattedMessage}' ` +
           `file='${filePath}' line='${line}' SEVERITY='${severityLevel}']`
       );
 

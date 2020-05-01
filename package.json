@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "prettify": "prettier --write ./**/*.js",
+    "prettify": "prettier --write \"./src/**/*.js\" --write \"./test/**/*.js\"",
     "test": "mocha \"./test/**/*.spec.js\"",
     "test:travis": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },

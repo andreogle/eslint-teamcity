@@ -15,7 +15,7 @@ module.exports = (results, config) => {
 
   outputList.push(`##teamcity[testSuiteStarted name='${reportName}']`);
 
-  results.forEach(result => {
+  results.forEach((result) => {
     const { messages } = result;
 
     if (messages.length === 0) {
@@ -30,10 +30,12 @@ module.exports = (results, config) => {
     const errorsList = [];
     const warningsList = [];
 
-    messages.forEach(messageObj => {
+    messages.forEach((messageObj) => {
       const { line, column, message, ruleId, fatal, severity } = messageObj;
 
-      const formattedMessage = `line ${line}, col ${column}, ${message} (${ruleId})`;
+      const formattedMessage = `line ${line}, col ${column}, ${message}${
+        ruleId ? ` (${ruleId})` : ''
+      }`;
 
       const isError = fatal || severity === 2;
       if (!isError) {
