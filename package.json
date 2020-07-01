@@ -30,8 +30,8 @@
   "devDependencies": {
     "chai": "^4.2.x",
     "coveralls": "^3.0.11",
-    "eslint": "^6.0.x",
-    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint": "^7.3.x",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.18.x",
     "husky": "^4.2.x",
     "lint-staged": "^10.0.x",
