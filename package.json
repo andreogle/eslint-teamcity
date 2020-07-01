@@ -35,7 +35,7 @@
     "eslint-plugin-import": "^2.18.x",
     "husky": "^4.2.x",
     "lint-staged": "^10.0.x",
-    "mocha": "^7.1.1",
+    "mocha": "^8.0.1",
     "nyc": "^15.0.x",
     "prettier": "^2.0.x",
     "shelljs": "^0.8.3",
