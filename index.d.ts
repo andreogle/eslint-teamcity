@@ -1,5 +1,12 @@
 import { ESLint } from "eslint";
 
-declare function format(results: ESLint.LintResult[], { reportName }: { reportName?: string }): string;
+interface Options {
+  reporter?: string;
+  reportName?: string;
+  errorStatisticsName?: string;
+  warningStatisticsName?: string;
+}
+
+declare function format(results: ESLint.LintResult[], options?: Options): string;
 
 export = format;
