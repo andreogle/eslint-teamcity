@@ -34,7 +34,7 @@
     "eslint": "^7.3.x",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.18.x",
-    "husky": "^4.2.x",
+    "husky": "^5.1.x",
     "lint-staged": "^10.0.x",
     "mocha": "^8.0.1",
     "nyc": "^15.0.x",
