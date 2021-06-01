@@ -2,10 +2,16 @@
   "name": "eslint-teamcity",
   "version": "3.1.0",
   "description": "An ESLint formatter plugin for TeamCity",
+  "author": "Andre Ogle <ogleandre@gmail.com> (https://github.com/andreogle)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreogle/eslint-teamcity/issues"
+  },
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
     "prettify": "prettier --write \"./src/**/*.js\" --write \"./test/**/*.js\"",
+    "pretty-quick": "pretty-quick --staged --pattern \"**/*.*(js|ts)\"",
     "test": "mocha \"./test/**/*.spec.js\"",
     "test:travis": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
@@ -19,13 +25,8 @@
     "formatter",
     "linting"
   ],
-  "author": "Andre Ogle <ogleandre@gmail.com> (https://github.com/andreogle)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/andreogle/eslint-teamcity/issues"
-  },
   "dependencies": {
-    "fs-extra": "^9.0.x"
+    "fs-extra": "^10.0.x"
   },
   "devDependencies": {
     "@types/eslint": "^7.2.6",
@@ -35,22 +36,11 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.18.x",
     "husky": "^6.0.x",
-    "lint-staged": "^10.0.x",
     "mocha": "^8.0.1",
     "nyc": "^15.0.x",
     "prettier": "^2.0.x",
+    "pretty-quick": "^3.1.x",
     "shelljs": "^0.8.3",
     "sinon": "^11.1.1"
-  },
-  "lint-staged": {
-    "*.js": [
-      "npm run prettify",
-      "npm run lint"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }
