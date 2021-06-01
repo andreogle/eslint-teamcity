@@ -36,12 +36,7 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
-        run: npm run test:coverage
-      - name: Report coverage
-        uses: coverallsapp/github-action@master
-        with:
-          flag-name: node-${{ matrix.node-version }}
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+        run: npm run test
 
   coverage:
     runs-on: ubuntu-latest
