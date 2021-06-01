@@ -11,6 +11,7 @@ on:
 jobs:
   documentation:
     runs-on: ubuntu-latest
+    name: Check Markdown links
     steps:
       - name: Clone eslint-teamcity
         uses: actions/checkout@master
@@ -21,8 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['12', '14', '16']
-    name: Build and test - Node v${{ matrix.node }}
+        node-version: [12.x, 14.x, 16.x]
+    name: Build (${{ matrix.node-version }})
     steps:
       - name: Clone eslint-teamcity
         uses: actions/checkout@v2
@@ -35,4 +36,11 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
-        run: npm run test
+        run: npm run test:coverage
+      - name: Report coverage
+        uses: coverallsapp/github-action@master
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+

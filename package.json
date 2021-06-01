@@ -13,8 +13,7 @@
     "prettify": "prettier --write \"./src/**/*.js\" --write \"./test/**/*.js\"",
     "pretty-quick": "pretty-quick --staged --pattern \"**/*.*(js|ts)\"",
     "test": "mocha \"./test/**/*.spec.js\"",
-    "test": "mocha \"./test/**/*.spec.js\"",
-    "test:travis": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "test:coverage": "nyc npm test"
   },
   "repository": {
     "type": "git",
