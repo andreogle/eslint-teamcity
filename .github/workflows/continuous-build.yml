@@ -43,4 +43,23 @@ jobs:
           flag-name: node-${{ matrix.node-version }}
           github-token: ${{ secrets.GH_ACCESS_TOKEN }}
 
+  coverage:
+    runs-on: ubuntu-latest
+    name: Report Coverage
+    steps:
+      - name: Clone eslint-teamcity
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+      - name: Install Dependencies
+        run: npm ci
+      - name: Test
+        run: make test-coverage
+      - name: Report to Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          flag-name: node-${{ matrix.node-version }}
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+
+
 
