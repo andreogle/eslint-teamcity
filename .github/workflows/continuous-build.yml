@@ -1,0 +1,38 @@
+name: Continuous Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone eslint-teamcity
+        uses: actions/checkout@master
+      - name: Check hyperlinks
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+
+  lint-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['12', '14', '16']
+      name: Build and test - Node v${{ matrix.node }}
+    steps:
+      - name: Clone eslint-teamcity
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test
