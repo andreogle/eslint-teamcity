@@ -1,6 +1,6 @@
 {
   "name": "eslint-teamcity",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "An ESLint formatter plugin for TeamCity",
   "author": "Andre Ogle <ogleandre@gmail.com> (https://github.com/andreogle)",
   "license": "MIT",
