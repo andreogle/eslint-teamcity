@@ -42,5 +42,7 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          flag-name: node-${{ matrix.node-version }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
 
