@@ -1,7 +1,7 @@
 # eslint-teamcity
 
 [![npm version](https://badge.fury.io/js/eslint-teamcity.svg)](https://www.npmjs.com/package/eslint-teamcity)
-[![Build Status](https://travis-ci.org/andreogle/eslint-teamcity.svg?branch=master)](https://travis-ci.org/andreogle/eslint-teamcity)
+[![Build Status](https://github.com/andreogle/eslint-teamcity/actions/workflows/continuous-build.yml/badge.svg)](https://github.com/andreogle/eslint-teamcity/actions/workflows/continuous-build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/andreogle/eslint-teamcity/badge.svg?branch=master)](https://coveralls.io/github/andreogle/eslint-teamcity?branch=master)
 [![npm downloads](https://img.shields.io/npm/dm/eslint-teamcity.svg)](https://www.npmjs.com/package/eslint-teamcity)
 
