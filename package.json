@@ -36,7 +36,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.18.x",
     "husky": "^6.0.x",
-    "mocha": "^8.0.1",
+    "mocha": "^9.0.1",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.0.x",
     "prettier": "^2.0.x",
