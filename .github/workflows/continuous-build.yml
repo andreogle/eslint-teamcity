@@ -50,6 +50,7 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run test:coverage
+        if: ${{ env.COVERALLS_REPO_TOKEN != null }}
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
