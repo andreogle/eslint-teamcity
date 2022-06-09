@@ -1,3 +1,6 @@
+> **Warning**
+> Please migrate to eslint-formatter-teamcity. This package was renamed to make use of custom [ESLint formatters](https://eslint.org/docs/developer-guide/working-with-custom-formatters#packaging-the-custom-formatter).The eslint-teamcity package has been deprecated and will no longer be maintained.
+
 # eslint-teamcity
 
 [![npm version](https://badge.fury.io/js/eslint-teamcity.svg)](https://www.npmjs.com/package/eslint-teamcity)
